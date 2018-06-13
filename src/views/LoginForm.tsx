@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChaged, loginUser } from '../actions';
-import { Card, CardItem, Input, Button, Header, Spinner } from '../components';
+import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 
 class LoginForm extends Component {
   onEmailChange(text) {
@@ -22,7 +22,7 @@ class LoginForm extends Component {
   renderError() {
     if (this.props.error) {
       return (
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={{ backgroundColor: '#FAC7A8' }}>
           <Text style={{ fontSize: 20, alignSelf: 'center', color: 'red' }}>
             {this.props.error}
             </Text>
@@ -36,15 +36,24 @@ renderButton() {
     return <Spinner />;
   }
   return (
-    <Button onPress={this.onButtonPress.bind(this)}>
-      login
-    </Button>
+    <CustomButton
+      onPress={this.onButtonPress.bind(this)}
+      style={styles.buttonStyle}>
+      Войти
+    </CustomButton>
   );
 }
   render() {
     return (
-      <View>
-        <Header headerText="LogIn" />
+      <View style={styles.viewStyle}>
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+        <Image
+          source={require('../icon.png')}
+        />
+      </View>
         <Card>
           <CardItem>
             <Input
@@ -64,14 +73,29 @@ renderButton() {
               value={this.props.password}
             />
           </CardItem>
+          </Card>
 
-          {this.renderError()}
+          <Card>
+            {this.renderError()}
 
-          <CardItem>
-            {this.renderButton()}
-          </CardItem>
+            <CardItem style={{backgroundColor:'#FAC7A8'}}>
+              {this.renderButton()}
+            </CardItem>
 
           </Card>
+
+            <View style={{flex: 1}}>
+             <TouchableWithoutFeedback>
+                    <View style={styles.lowerButtonsStyle}>
+                    <Text style={styles.lowerTextStyle}>Forgot password?</Text>
+                    </View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback>
+                     <View style={styles.lowerButtonsStyle}>
+                     <Text style={styles.lowerTextStyle}>Create account</Text>
+                     </View>
+               </TouchableWithoutFeedback>
+             </View>
         </View>
     );
   }
@@ -85,5 +109,36 @@ const mapStateToProps = state => {
     loading: state.auth.loading
   };
 };
+
+const styles = {
+  viewStyle: {
+    backgroundColor: '#FAC7A8',
+    flex: 1
+  },
+  buttonStyle: {
+    backgroundColor: '#fff',
+    borderColor: '#EEDFA6',
+  },
+  imageStyle: {
+    height: 40,
+    width: 40
+  },
+  lowerButtonsStyle: {
+    alignSelf: 'center',
+    height: 45,
+    width: 160,
+    backgroundColor: '#FAC7A8',
+    borderColor: "transparent"
+  },
+  lowerTextStyle: {
+    alignSelf: 'center',
+    color: '#000',
+    fontSize: 16,
+    fontWeight: '600',
+    paddingTop: 10,
+    paddingBottom: 10,
+    flex: 1
+  }
+}
 
 export default connect(mapStateToProps, { emailChanged, passwordChaged, loginUser })(LoginForm);

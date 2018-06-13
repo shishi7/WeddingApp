@@ -22,7 +22,7 @@ switch (action.type) {
   case PASSWORD_CHANGED:
     return { ...state, password: action.payload };
   case LOGIN_USER_FAIL:
-    return { ...state, error: 'Authentication Failed', password: '', loading: false };
+    return { ...state, error: 'Неверный логин/пароль', password: '', loading: false };
   case LOGIN_USER:
     return { ...state, loading: true };
   default:
