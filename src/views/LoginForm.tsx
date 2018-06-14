@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChaged, loginUser } from '../actions';
+import { Actions } from 'react-native-router-flux';
+import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 
 class LoginForm extends Component {
@@ -10,13 +11,21 @@ class LoginForm extends Component {
   }
 
   onPasswordChange(text) {
-    this.props.passwordChaged(text);
+    this.props.passwordChanged(text);
   }
 
   onButtonPress() {
     const { email, password } = this.props;
 
     this.props.loginUser({ email, password });
+  }
+
+  onForgotPassPress() {
+    this.props.toForgotPassword();
+  }
+
+  onCreateAccPress() {
+    this.props.toAccCreate();
   }
 
   renderError() {
@@ -85,16 +94,24 @@ renderButton() {
           </Card>
 
             <View style={{flex: 1}}>
-             <TouchableWithoutFeedback>
-                    <View style={styles.lowerButtonsStyle}>
-                    <Text style={styles.lowerTextStyle}>Forgot password?</Text>
-                    </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback>
-                     <View style={styles.lowerButtonsStyle}>
-                     <Text style={styles.lowerTextStyle}>Create account</Text>
-                     </View>
-               </TouchableWithoutFeedback>
+             <TouchableWithoutFeedback
+               onPress = {this.onForgotPassPress.bind(this)}
+               >
+              <View style={styles.lowerButtonsStyle}>
+                <Text style={styles.lowerTextStyle}>
+                  Forgot password?
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress = {this.onCreateAccPress.bind(this)}
+            >
+              <View style={styles.lowerButtonsStyle}>
+                <Text style={styles.lowerTextStyle}>
+                  Create account
+                </Text>
+              </View>
+             </TouchableWithoutFeedback>
              </View>
         </View>
     );
@@ -141,4 +158,10 @@ const styles = {
   }
 }
 
-export default connect(mapStateToProps, { emailChanged, passwordChaged, loginUser })(LoginForm);
+export default connect(mapStateToProps, {
+  emailChanged,
+  passwordChanged,
+  loginUser,
+  toForgotPassword,
+  toAccCreate
+})(LoginForm);
