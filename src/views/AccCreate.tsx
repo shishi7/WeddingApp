@@ -5,6 +5,10 @@ import { emailChanged, passwordChanged, fullNameChanged, loginUser, createUser }
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 
 class AccCreate extends Component {
+  static navigationOptions = {
+    header: null
+  };
+  
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
@@ -18,9 +22,9 @@ class AccCreate extends Component {
   }
 
   onButtonPress() {
-    const { email, password, fullName } = this.props;
+    const { email, password, fullName, navigation } = this.props;
 
-    this.props.createUser({ email, password, fullName });
+    this.props.createUser({ email, password, fullName, navigation });
 
   }
 
@@ -63,7 +67,7 @@ class AccCreate extends Component {
             <CardItem>
               <Input
                 label="Full Name"
-                placeholder="Двое Кимов, не считая Шина"
+                placeholder="John Doe"
                 onChangeText={this.onNameChange.bind(this)}
                 value={this.props.fullName}
               />
@@ -72,7 +76,7 @@ class AccCreate extends Component {
             <CardItem>
               <Input
                 label="Email"
-                placeholder="sidimiperdim@gmail.com"
+                placeholder="example@gmail.com"
                 onChangeText={this.onEmailChange.bind(this)}
                 value={this.props.email}
               />

@@ -6,6 +6,10 @@ import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 
 class LoginForm extends Component {
+  static navigationOptions = {
+    header: null
+  };
+
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
@@ -15,17 +19,17 @@ class LoginForm extends Component {
   }
 
   onButtonPress() {
-    const { email, password } = this.props;
+    const { email, password, navigation } = this.props;
 
-    this.props.loginUser({ email, password });
+    this.props.loginUser({ email, password, navigation });
   }
 
   onForgotPassPress() {
-    this.props.toForgotPassword();
+    this.props.toForgotPassword({ navigation: this.props.navigation });
   }
 
   onCreateAccPress() {
-    this.props.toAccCreate();
+    this.props.toAccCreate({ navigation: this.props.navigation });
   }
 
   renderError() {
@@ -157,6 +161,7 @@ const styles = {
     flex: 1
   }
 }
+
 
 export default connect(mapStateToProps, {
   emailChanged,

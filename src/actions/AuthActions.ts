@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import { Actions } from 'react-native-router-flux';
+
 import { EMAIL_CHANGED,
         PASSWORD_CHANGED,
         FULLNAME_CHANGED,
@@ -15,17 +15,17 @@ import { EMAIL_CHANGED,
         RESET_PASSWORD_FAIL
 } from './types';
 
-export const toForgotPassword = () => {
+export const toForgotPassword = ({ navigation }) => {
   return (dispatch) => {
     dispatch({ type: VOID_ACTION });
-    Actions.resetPass();
+    navigation.navigate('resetPass');
   };
 };
 
-export const toAccCreate = () => {
+export const toAccCreate = ({ navigation }) => {
   return (dispatch) => {
     dispatch({ type: VOID_ACTION });
-    Actions.accCreate();
+    navigation.navigate('accCreate');
   };
 };
 
@@ -50,13 +50,13 @@ export const fullNameChanged = (text) => {
   };
 };
 
-export const loginUser = ({ email, password }) => {
+export const loginUser = ({ email, password, navigation }) => {
     return (dispatch) => {
         dispatch({ type: LOGIN_USER });
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(
-                user => loginUserSuccess(dispatch, user))
+                user => loginUserSuccess(dispatch, user, navigation))
             .catch(() => loginUserFail(dispatch));
         };
 };
@@ -65,21 +65,21 @@ const loginUserFail = (dispatch) => {
   dispatch({ type: LOGIN_USER_FAIL });
 };
 
-const loginUserSuccess = (dispatch, user) => {
+const loginUserSuccess = (dispatch, user, navigation) => {
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
 
-  Actions.eventList();
+  navigation.navigate('eventList');
 };
 
-export const createUser = ({ email, password, fullName }) => {
+export const createUser = ({ email, password, fullName, navigation }) => {
   return (dispatch) => {
     dispatch({ type: CREATE_USER });
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(user => helper(dispatch, user, fullName))
+      .then(user => helper(dispatch, user, fullName, navigation))
       .catch(() => createUserFail(dispatch));
   };
 };
@@ -90,26 +90,27 @@ const createUserFail = (dispatch) => {
   });
 };
 
-const helper = (dispatch, user, fullName) => {
-  createUserSuccess(dispatch, user);
+const helper = (dispatch, user, fullName, navigation) => {
+  createUserSuccess(dispatch, user, navigation);
 
   var currentUser = firebase.auth().currentUser;
   currentUser.updateProfile({displayName: fullName});
 };
-const createUserSuccess = (dispatch, user) => {
+const createUserSuccess = (dispatch, user, navigation) => {
   dispatch({
     type: CREATE_USER_SUCCESS,
     payload: user
   });
-  Actions.eventList();
+
+  navigation.navigate('eventList');
 };
 
-export const resetPass = ({ email }) => {
+export const resetPass = ({ email, navigation }) => {
     return (dispatch) => {
         dispatch({ type: RESET_PASSWORD });
         firebase.auth().sendPasswordResetEmail(email)
           .then(
-            user => resetPassSuccess(dispatch, user))
+            user => resetPassSuccess(dispatch, user, navigation))
           .catch(() => resetPassFail(dispatch));
         };
 };
@@ -118,11 +119,11 @@ const resetPassFail = (dispatch) => {
   dispatch({ type: RESET_PASSWORD_FAIL });
 };
 
-const resetPassSuccess = (dispatch, user) => {
+const resetPassSuccess = (dispatch, user, navigation) => {
   dispatch({
     type: RESET_PASSWORD_SUCCESS,
     payload: user
   });
 
-  Actions.login();
+  navigation.navigate('login');
 }

@@ -5,13 +5,17 @@ import { emailChanged, resetPass } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 
 class ResetPass extends Component {
+  static navigationOptions = {
+    header: null
+  };
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
 
   onButtonPress() {
+    const { email, navigation } = this.props;
 
-    this.props.resetPass({ email: this.props.email });
+    this.props.resetPass({ email, navigation });
 
   }
 
@@ -51,7 +55,7 @@ class ResetPass extends Component {
             <CardItem>
               <Input
                 label="Email"
-                placeholder="sidimiperdim@gmail.com"
+                placeholder="example@gmail.com"
                 onChangeText={this.onEmailChange.bind(this)}
                 value={this.props.email}
               />
