@@ -71,7 +71,7 @@ const loginUserSuccess = (dispatch, user, navigation) => {
     payload: user
   });
   console.log('login success');
-  navigation.navigate('eventList');
+  navigation.navigate('Main');
 };
 
 export const createUser = ({ email, password, fullName, navigation }) => {
@@ -102,7 +102,7 @@ const createUserSuccess = (dispatch, user, navigation) => {
     payload: user
   });
 
-  navigation.navigate('eventList');
+  navigation.navigate('Main');
 };
 
 export const resetPass = ({ email, navigation }) => {

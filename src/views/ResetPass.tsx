@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
+
 import { emailChanged, resetPass } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
+import { PITCH } from '../consts/colors';
 
 class ResetPass extends Component {
   static navigationOptions = {
@@ -81,7 +83,7 @@ class ResetPass extends Component {
 
   const styles = {
     viewStyle: {
-      backgroundColor: '#FAC7A8',
+      backgroundColor: PITCH,
       flex: 1
     },
     buttonStyle: {

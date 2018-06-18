@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+
 import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
+import { PITCH } from '../consts/colors';
 
 class LoginForm extends Component {
   static navigationOptions = {
@@ -133,7 +134,7 @@ const mapStateToProps = state => {
 
 const styles = {
   viewStyle: {
-    backgroundColor: '#FAC7A8',
+    backgroundColor: PITCH,
     flex: 1
   },
   buttonStyle: {
@@ -148,7 +149,7 @@ const styles = {
     alignSelf: 'center',
     height: 45,
     width: 160,
-    backgroundColor: '#FAC7A8',
+    backgroundColor: PITCH,
     borderColor: "transparent"
   },
   lowerTextStyle: {

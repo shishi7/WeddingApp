@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
+
 import { emailChanged, passwordChanged, fullNameChanged, loginUser, createUser } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
+import { PITCH } from '../consts/colors';
 
 class AccCreate extends Component {
   static navigationOptions = {
     header: null
   };
-  
+
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
@@ -31,7 +33,7 @@ class AccCreate extends Component {
   renderError() {
     if (this.props.error) {
       return (
-        <View style={{ backgroundColor: '#FAC7A8' }}>
+        <View style={{ backgroundColor: PITCH }}>
           <Text style={{ fontSize: 18, alignSelf: 'center', color: 'red' }}>
             {this.props.error}
             </Text>
@@ -96,7 +98,7 @@ class AccCreate extends Component {
           <Card>
             {this.renderError()}
 
-            <CardItem style={{backgroundColor:'#FAC7A8'}}>
+            <CardItem style={{backgroundColor:PITCH}}>
               {this.renderButton()}
             </CardItem>
 
@@ -111,7 +113,7 @@ class AccCreate extends Component {
 
   const styles = {
     viewStyle: {
-      backgroundColor: '#FAC7A8',
+      backgroundColor: PITCH,
       flex: 1
     },
     buttonStyle: {
