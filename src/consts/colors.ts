@@ -1,1 +1,1 @@
-export const PITCH = '#FAC7A8';
+export const PEACH = '#FAC7A8';

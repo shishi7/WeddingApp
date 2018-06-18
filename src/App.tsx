@@ -17,7 +17,7 @@ class App extends Component {
       projectId: 'weddingapp-1337',
       storageBucket: 'weddingapp-1337.appspot.com',
       messagingSenderId: '587460572824'
-};
+    };
 
   firebase.initializeApp(config);
   }

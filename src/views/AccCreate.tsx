@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { emailChanged, passwordChanged, fullNameChanged, loginUser, createUser } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
-import { PITCH } from '../consts/colors';
+import { PEACH } from '../consts/colors';
 
 class AccCreate extends Component {
   static navigationOptions = {
@@ -33,7 +33,7 @@ class AccCreate extends Component {
   renderError() {
     if (this.props.error) {
       return (
-        <View style={{ backgroundColor: PITCH }}>
+        <View style={{ backgroundColor: PEACH }}>
           <Text style={{ fontSize: 18, alignSelf: 'center', color: 'red' }}>
             {this.props.error}
             </Text>
@@ -98,13 +98,13 @@ class AccCreate extends Component {
           <Card>
             {this.renderError()}
 
-            <CardItem style={{backgroundColor:PITCH}}>
+            <CardItem style={{backgroundColor:PEACH}}>
               {this.renderButton()}
             </CardItem>
 
           </Card>
 
-          </View>
+        </View>
       );
     }
   }
@@ -113,7 +113,7 @@ class AccCreate extends Component {
 
   const styles = {
     viewStyle: {
-      backgroundColor: PITCH,
+      backgroundColor: PEACH,
       flex: 1
     },
     buttonStyle: {

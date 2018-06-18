@@ -9,18 +9,18 @@ import EventList from './views/EventList';
 import ResetPass from './views/ResetPass';
 import Chat from './views/Chat';
 import Profile from './views/Profile';
-import { PITCH } from './consts/colors';
+import { PEACH } from './consts/colors';
 
 
 const AuthNavigator = createStackNavigator({
     login: {
-        screen: LoginForm,
+      screen: LoginForm,
     },
     accCreate: {
-        screen: AccCreate
+      screen: AccCreate
     },
     resetPass: {
-        screen: ResetPass
+      screen: ResetPass
     }
 }, {
     initialRouteName: 'login',
@@ -29,46 +29,48 @@ const AuthNavigator = createStackNavigator({
 });
 
 const MainNavigator = createMaterialBottomTabNavigator({
-    home: {
-        screen: EventList,
-        navigationOptions: {
-          tabBarIcon: ({ tintColor }) => (
-            <Icon size={24} name={ 'home' } style={{ color: tintColor }} />
-          )
-        }
-    },
-    chat: {
-        screen: Chat,
-        navigationOptions: {
-          tabBarIcon: ({ tintColor }) => (
-            <Icon size={24} name={ 'comment' } style={{ color: tintColor }} />
-          )
-        }
-    },
-    profile: {
-        screen: Profile,
-        navigationOptions: {
-          tabBarIcon: ({ tintColor }) => (
-            <Icon size={24} name={ 'user' } style={{ color: tintColor }} />
-          )
-        }
+  home: {
+    screen: EventList,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <Icon size={24} name={ 'home' } style={{ color: tintColor }} />
+      )
     }
-}, {
-    initialRouteName: 'home',
-    order: ['profile', 'home', 'chat'],
-    activeTintColor: '#000000',
-    inactiveTintColor: '#000000',
-    barStyle: { backgroundColor: PITCH },
-    shifting: true
+  },
+  chat: {
+    screen: Chat,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <Icon size={24} name={ 'comment' } style={{ color: tintColor }} />
+      )
+    }
+  },
+  profile: {
+    screen: Profile,
+    navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <Icon size={24} name={ 'user' } style={{ color: tintColor }} />
+      )
+    }
+  }
+},
+{
+  initialRouteName: 'home',
+  order: ['profile', 'home', 'chat'],
+  activeTintColor: '#000000',
+  inactiveTintColor: '#000000',
+  barStyle: { backgroundColor: PEACH },
+  shifting: true
 });
 
 const Router = createStackNavigator({
-    Auth: { screen: AuthNavigator},
-    Main: { screen: MainNavigator },
-}, {
-    initialRouteName: 'Auth',
-    headerMode: 'none',
-    animationEnabled: 'true'
+  Auth: { screen: AuthNavigator},
+  Main: { screen: MainNavigator },
+},
+{
+  initialRouteName: 'Auth',
+  headerMode: 'none',
+  animationEnabled: 'true'
 });
 
 export default Router;

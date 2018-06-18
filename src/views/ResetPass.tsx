@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { emailChanged, resetPass } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
-import { PITCH } from '../consts/colors';
+import { PEACH } from '../consts/colors';
 
 class ResetPass extends Component {
   static navigationOptions = {
@@ -27,7 +27,7 @@ class ResetPass extends Component {
         <View style={{ backgroundColor: '#FAC7A8' }}>
           <Text style={{ fontSize: 18, alignSelf: 'center', color: 'red' }}>
             {this.props.error}
-            </Text>
+          </Text>
         </View>
       );
     }
@@ -41,60 +41,58 @@ class ResetPass extends Component {
       </CustomButton>
     );
   }
-    render() {
-      return (
-        <View style={styles.viewStyle}>
-          <View style={{
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+  render() {
+    return (
+      <View style={styles.viewStyle}>
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
           <Image
             source={require('../icon.png')}
           />
         </View>
-          <Card>
+        <Card>
+          <CardItem>
+            <Input
+              label="Email"
+              placeholder="example@gmail.com"
+              onChangeText={this.onEmailChange.bind(this)}
+              value={this.props.email}
+            />
+          </CardItem>
+        </Card>
 
-            <CardItem>
-              <Input
-                label="Email"
-                placeholder="example@gmail.com"
-                onChangeText={this.onEmailChange.bind(this)}
-                value={this.props.email}
-              />
-              </CardItem>
+        <Card>
+          {this.renderError()}
 
-          </Card>
+          <CardItem style={{backgroundColor:'#FAC7A8'}}>
+            {this.renderButton()}
+          </CardItem>
 
-          <Card>
-            {this.renderError()}
+        </Card>
 
-            <CardItem style={{backgroundColor:'#FAC7A8'}}>
-              {this.renderButton()}
-            </CardItem>
-
-          </Card>
-
-          </View>
-      );
-    }
+      </View>
+    );
   }
+}
 
 
 
-  const styles = {
-    viewStyle: {
-      backgroundColor: PITCH,
-      flex: 1
-    },
-    buttonStyle: {
-      backgroundColor: '#fff',
-      borderColor: '#EEDFA6',
-    },
-    imageStyle: {
-      height: 40,
-      width: 40
-    }
+const styles = {
+  viewStyle: {
+    backgroundColor: PEACH,
+    flex: 1
+  },
+  buttonStyle: {
+    backgroundColor: '#fff',
+    borderColor: '#EEDFA6',
+  },
+  imageStyle: {
+    height: 40,
+    width: 40
   }
+}
 
 const mapStateToProps = ({ auth }) => {
   const { email, error } = auth;

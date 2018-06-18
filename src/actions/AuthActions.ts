@@ -51,14 +51,14 @@ export const fullNameChanged = (text) => {
 };
 
 export const loginUser = ({ email, password, navigation }) => {
-    return (dispatch) => {
-        dispatch({ type: LOGIN_USER });
+  return (dispatch) => {
+    dispatch({ type: LOGIN_USER });
 
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(
-                user => loginUserSuccess(dispatch, user, navigation))
-            .catch(() => loginUserFail(dispatch));
-        };
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(
+        user => loginUserSuccess(dispatch, user, navigation))
+      .catch(() => loginUserFail(dispatch));
+  };
 };
 
 const loginUserFail = (dispatch) => {
@@ -106,13 +106,14 @@ const createUserSuccess = (dispatch, user, navigation) => {
 };
 
 export const resetPass = ({ email, navigation }) => {
-    return (dispatch) => {
-        dispatch({ type: RESET_PASSWORD });
-        firebase.auth().sendPasswordResetEmail(email)
-          .then(
-            user => resetPassSuccess(dispatch, user, navigation))
-          .catch(() => resetPassFail(dispatch));
-        };
+  return (dispatch) => {
+    dispatch({ type: RESET_PASSWORD });
+
+    firebase.auth().sendPasswordResetEmail(email)
+      .then(
+        user => resetPassSuccess(dispatch, user, navigation))
+      .catch(() => resetPassFail(dispatch));
+  };
 };
 
 const resetPassFail = (dispatch) => {

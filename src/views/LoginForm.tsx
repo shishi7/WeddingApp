@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
-import { PITCH } from '../consts/colors';
+import { PEACH } from '../consts/colors';
 
 class LoginForm extends Component {
   static navigationOptions = {
@@ -39,24 +39,24 @@ class LoginForm extends Component {
         <View style={{ backgroundColor: '#FAC7A8' }}>
           <Text style={{ fontSize: 20, alignSelf: 'center', color: 'red' }}>
             {this.props.error}
-            </Text>
+          </Text>
         </View>
       );
     }
   }
 
-renderButton() {
-  if (this.props.loading) {
-    return <Spinner />;
+  renderButton() {
+    if (this.props.loading) {
+      return <Spinner />;
+    }
+    return (
+      <CustomButton
+        onPress={this.onButtonPress.bind(this)}
+        style={styles.buttonStyle}>
+        Войти
+      </CustomButton>
+    );
   }
-  return (
-    <CustomButton
-      onPress={this.onButtonPress.bind(this)}
-      style={styles.buttonStyle}>
-      Войти
-    </CustomButton>
-  );
-}
   render() {
     return (
       <View style={styles.viewStyle}>
@@ -67,7 +67,8 @@ renderButton() {
         <Image
           source={require('../icon.png')}
         />
-      </View>
+        </View>
+
         <Card>
           <CardItem>
             <Input
@@ -76,7 +77,7 @@ renderButton() {
               onChangeText={this.onEmailChange.bind(this)}
               value={this.props.email}
             />
-            </CardItem>
+          </CardItem>
 
           <CardItem>
             <Input
@@ -87,38 +88,39 @@ renderButton() {
               value={this.props.password}
             />
           </CardItem>
-          </Card>
+        </Card>
 
-          <Card>
-            {this.renderError()}
+        <Card>
+          {this.renderError()}
 
-            <CardItem style={{backgroundColor:'#FAC7A8'}}>
-              {this.renderButton()}
-            </CardItem>
+          <CardItem style={{backgroundColor:'#FAC7A8'}}>
+            {this.renderButton()}
+          </CardItem>
 
-          </Card>
+        </Card>
 
-            <View style={{flex: 1}}>
-             <TouchableWithoutFeedback
-               onPress = {this.onForgotPassPress.bind(this)}
-               >
-              <View style={styles.lowerButtonsStyle}>
-                <Text style={styles.lowerTextStyle}>
-                  Forgot password?
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPress = {this.onCreateAccPress.bind(this)}
-            >
-              <View style={styles.lowerButtonsStyle}>
-                <Text style={styles.lowerTextStyle}>
-                  Create account
-                </Text>
-              </View>
-             </TouchableWithoutFeedback>
-             </View>
+        <View style={{flex: 1}}>
+          <TouchableWithoutFeedback
+            onPress = {this.onForgotPassPress.bind(this)}
+          >
+          <View style={styles.lowerButtonsStyle}>
+            <Text style={styles.lowerTextStyle}>
+              Forgot password?
+            </Text>
+          </View>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback
+            onPress = {this.onCreateAccPress.bind(this)}
+          >
+          <View style={styles.lowerButtonsStyle}>
+            <Text style={styles.lowerTextStyle}>
+              Create account
+            </Text>
+          </View>
+          </TouchableWithoutFeedback>
         </View>
+      </View>
     );
   }
 }
@@ -134,7 +136,7 @@ const mapStateToProps = state => {
 
 const styles = {
   viewStyle: {
-    backgroundColor: PITCH,
+    backgroundColor: PEACH,
     flex: 1
   },
   buttonStyle: {
@@ -149,7 +151,7 @@ const styles = {
     alignSelf: 'center',
     height: 45,
     width: 160,
-    backgroundColor: PITCH,
+    backgroundColor: PEACH,
     borderColor: "transparent"
   },
   lowerTextStyle: {
