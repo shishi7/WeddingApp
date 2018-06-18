@@ -70,7 +70,7 @@ const loginUserSuccess = (dispatch, user, navigation) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
-
+  console.log('login success');
   navigation.navigate('eventList');
 };
 
