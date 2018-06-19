@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import Loading from './views/Loading'
 import LoginForm from './views/LoginForm';
 import AccCreate from './views/AccCreate';
 import EventList from './views/EventList';
@@ -56,7 +57,7 @@ const MainNavigator = createMaterialBottomTabNavigator({
 },
 {
   initialRouteName: 'home',
-  order: ['profile', 'home', 'chat'],
+  order: ['home', 'chat', 'profile'],
   activeTintColor: '#000000',
   inactiveTintColor: '#000000',
   barStyle: { backgroundColor: PEACH },
@@ -64,11 +65,12 @@ const MainNavigator = createMaterialBottomTabNavigator({
 });
 
 const Router = createStackNavigator({
+  Loading: { screen: Loading },
   Auth: { screen: AuthNavigator},
   Main: { screen: MainNavigator },
 },
 {
-  initialRouteName: 'Auth',
+  initialRouteName: 'Loading',
   headerMode: 'none',
   animationEnabled: 'true'
 });
