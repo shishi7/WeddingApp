@@ -57,6 +57,7 @@ class LoginForm extends Component {
       </CustomButton>
     );
   }
+  
   render() {
     return (
       <View style={styles.viewStyle}>
