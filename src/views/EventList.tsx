@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, TouchableNative, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 import { PEACH } from '../consts/colors';
@@ -45,18 +46,19 @@ class LoginForm extends Component {
     }
   }
 
-  renderButton() {
-    if (this.props.loading) {
-      return <Spinner />;
-    }
-    return (
-      <CustomButton
-        onPress={this.onButtonPress.bind(this)}
-        style={styles.buttonStyle}>
-        Войти
-      </CustomButton>
-    );
-  }
+  // renderButton() {
+  //   if (this.props.loading) {
+  //     return <Spinner />;
+  //   }
+  //   return (
+  //     <CustomButton
+  //       onPress={this.onButtonPress.bind(this)}
+  //       style={styles.buttonStyle}>
+  //       Войти
+  //     </CustomButton>
+  //   );
+  // }
+
   render() {
     return (
       <View style={styles.viewStyle}>
@@ -68,10 +70,44 @@ class LoginForm extends Component {
         />
         </View>
         <Card>
-          {this.renderError()}
-          <CardItem style={{backgroundColor:'#FAC7A8'}}>
-            {this.renderButton()}
-          </CardItem>
+          <CardItem>
+          {/* {this.renderError()} */}
+            <Button
+                icon={{
+                  name: 'fa-plus-square',
+                  size: 30,
+                  color: 'black'
+                }}
+                containerViewStyle={{width: '100%', marginLeft: 0}}
+                buttonStyle={{
+                  backgroundColor: "#fff",
+                  borderColor: "#000",
+                  borderWidth: 2,
+                  borderRadius: 8
+                }}
+              />
+            </CardItem>
+          <ScrollView>
+            <View style={{
+              flex: 1,
+              overflow: 'hidden',
+              alignItems: 'center',
+              position: 'relative',
+              margin: 10
+            }}>
+              <Image
+                resizeMode='cover'
+                resizeMethod='scale'
+                source={require('../sample.jpg')}
+              />
+            </View>
+            <Image
+              source={require('../sample.jpg')}
+            />
+            <Image
+              source={require('../sample.jpg')}
+            />
+          </ScrollView>
         </Card>
 
       </View>
@@ -90,7 +126,7 @@ const mapStateToProps = state => {
 
 const styles = {
   viewStyle: {
-    backgroundColor: PEACH,
+    backgroundColor: '#fff',
     flex: 1
   },
   buttonStyle: {
