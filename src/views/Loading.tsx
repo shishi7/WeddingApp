@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import firebase from 'firebase';
+import { Spinner } from '../components';
+import { PEACH } from '../consts/colors';
 
 const config = {
   apiKey: 'AIzaSyDS5rCta4AfPr0cy73O9u7t5Q2zmGNRLx0',
@@ -21,8 +23,21 @@ class Loading extends Component {
 
   render() {
     return (
-      <View>
-        <Text>loading</Text>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: PEACH,
+        }}>
+          <View style={{
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+          <Image
+            source={require('../icon.png')}
+          />
+          </View>
+
+          <Spinner />
       </View>
     );
   }
