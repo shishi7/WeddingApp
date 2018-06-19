@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-
+import { Button } from 'react-native-elements';
 import { emailChanged, passwordChanged, fullNameChanged, loginUser, createUser } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 import { PEACH } from '../consts/colors';
@@ -46,11 +46,23 @@ class AccCreate extends Component {
       return <Spinner />;
     }
     return (
-      <CustomButton
+      <Button
+        title="Login"
         onPress={this.onButtonPress.bind(this)}
-        style={styles.buttonStyle}>
-        Зарегистрироваться
-      </CustomButton>
+        color='black'
+        titleStyle={{ fontWeight: "700", color: "#ff00ff" }}
+        buttonStyle={{
+          marginTop: 20 ,
+          backgroundColor: 'white',
+          width: 300,
+          height: 45,
+          borderColor: "black",
+          borderWidth: 1,
+          borderRadius: 1
+        }}
+        containerViewStyle={{width: '100%', marginLeft: 0}}
+        containerStyle={{ marginTop: 20 }}
+      />
     );
   }
     render() {
@@ -95,15 +107,10 @@ class AccCreate extends Component {
             </CardItem>
           </Card>
 
-          <Card>
-            {this.renderError()}
-
-            <CardItem style={{backgroundColor:PEACH}}>
-              {this.renderButton()}
-            </CardItem>
-
-          </Card>
-
+          <View style={{    alignSelf: 'center'}}>
+            {this.renderButton()}
+          </View>
+              {this.renderError()}
         </View>
       );
     }

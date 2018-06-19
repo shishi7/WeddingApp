@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
-
+import { Button } from 'react-native-elements';
 import { emailChanged, resetPass } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 import { PEACH } from '../consts/colors';
@@ -34,11 +34,23 @@ class ResetPass extends Component {
   }
   renderButton() {
     return (
-      <CustomButton
+      <Button
+        title="Send"
         onPress={this.onButtonPress.bind(this)}
-        style={styles.buttonStyle}>
-        Отправить
-      </CustomButton>
+        color='black'
+        titleStyle={{ fontWeight: "700", color: "#ff00ff" }}
+        buttonStyle={{
+          marginTop: 20 ,
+          backgroundColor: 'white',
+          width: 300,
+          height: 45,
+          borderColor: "black",
+          borderWidth: 1,
+          borderRadius: 1
+        }}
+        containerViewStyle={{width: '100%', marginLeft: 0}}
+        containerStyle={{ marginTop: 20 }}
+      />
     );
   }
   render() {
@@ -62,16 +74,11 @@ class ResetPass extends Component {
             />
           </CardItem>
         </Card>
+        <View style={{    alignSelf: 'center'}}>
+          {this.renderButton()}
+        </View>
 
-        <Card>
           {this.renderError()}
-
-          <CardItem style={{backgroundColor:'#FAC7A8'}}>
-            {this.renderButton()}
-          </CardItem>
-
-        </Card>
-
       </View>
     );
   }

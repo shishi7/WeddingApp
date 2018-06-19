@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
-
+import { Button } from 'react-native-elements';
 import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 import { PEACH } from '../consts/colors';
@@ -50,14 +50,26 @@ class LoginForm extends Component {
       return <Spinner />;
     }
     return (
-      <CustomButton
+      <Button
+        title="Login"
         onPress={this.onButtonPress.bind(this)}
-        style={styles.buttonStyle}>
-        Войти
-      </CustomButton>
+        color='black'
+        titleStyle={{ fontWeight: "700", color: "#ff00ff" }}
+        buttonStyle={{
+          marginTop: 20 ,
+          backgroundColor: 'white',
+          width: 300,
+          height: 45,
+          borderColor: "black",
+          borderWidth: 1,
+          borderRadius: 1
+        }}
+        containerViewStyle={{width: '100%', marginLeft: 0}}
+        containerStyle={{ marginTop: 20 }}
+      />
     );
   }
-  
+
   render() {
     return (
       <View style={styles.viewStyle}>
@@ -90,17 +102,12 @@ class LoginForm extends Component {
             />
           </CardItem>
         </Card>
+        <View style={{    alignSelf: 'center',}}>
+          {this.renderButton()}
+        </View>
+        {this.renderError()}
 
-        <Card>
-          {this.renderError()}
-
-          <CardItem style={{backgroundColor:'#FAC7A8'}}>
-            {this.renderButton()}
-          </CardItem>
-
-        </Card>
-
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, marginTop: 70}}>
           <TouchableWithoutFeedback
             onPress = {this.onForgotPassPress.bind(this)}
           >
@@ -114,7 +121,7 @@ class LoginForm extends Component {
           <TouchableWithoutFeedback
             onPress = {this.onCreateAccPress.bind(this)}
           >
-          <View style={styles.lowerButtonsStyle}>
+          <View style={styles.lowerButtonsStyle1}>
             <Text style={styles.lowerTextStyle}>
               Create account
             </Text>
@@ -140,25 +147,40 @@ const styles = {
     backgroundColor: PEACH,
     flex: 1
   },
+
   buttonStyle: {
     backgroundColor: '#fff',
     borderColor: '#EEDFA6',
+    borderWidth: 2,
+
   },
+
   imageStyle: {
     height: 40,
     width: 40
   },
+
   lowerButtonsStyle: {
     alignSelf: 'center',
     height: 45,
     width: 160,
     backgroundColor: PEACH,
-    borderColor: "transparent"
-  },
+    borderColor: 'black',
+    borderBottomWidth: 1,
+},
+
+lowerButtonsStyle1: {
+  alignSelf: 'center',
+  height: 45,
+  width: 160,
+  backgroundColor: PEACH,
+  borderColor: 'transparent'
+},
+
   lowerTextStyle: {
     alignSelf: 'center',
     color: '#000',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     paddingTop: 10,
     paddingBottom: 10,

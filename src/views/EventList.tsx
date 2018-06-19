@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback, TouchableNative, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
+import firebase from 'firebase';
+import RNFetchBlob from 'react-native-fetch-blob';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
@@ -34,44 +36,16 @@ class LoginForm extends Component {
     this.props.toAccCreate({ navigation: this.props.navigation });
   }
 
-  renderError() {
-    if (this.props.error) {
-      return (
-        <View style={{ backgroundColor: '#FAC7A8' }}>
-          <Text style={{ fontSize: 20, alignSelf: 'center', color: 'red' }}>
-            {this.props.error}
-          </Text>
-        </View>
-      );
-    }
-  }
-
-  // renderButton() {
-  //   if (this.props.loading) {
-  //     return <Spinner />;
-  //   }
-  //   return (
-  //     <CustomButton
-  //       onPress={this.onButtonPress.bind(this)}
-  //       style={styles.buttonStyle}>
-  //       Войти
-  //     </CustomButton>
-  //   );
-  // }
-
   render() {
     return (
       <View style={styles.viewStyle}>
-        <View style={{
-          alignItems: 'center'
-        }}>
+        <View style={styles.headerStyle}>
         <Image
           source={require('../small_logo.png')}
         />
         </View>
         <Card>
           <CardItem>
-          {/* {this.renderError()} */}
             <Button
                 icon={{
                   name: 'fa-plus-square',
@@ -152,6 +126,15 @@ const styles = {
     paddingTop: 10,
     paddingBottom: 10,
     flex: 1
+  },
+  headerStyle: {
+    backgroundColor: PEACH,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    shadowColor: 'black',
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.3
   }
 }
 
