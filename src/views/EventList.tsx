@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate, toAddWedding } from '../actions';
+import { toAddWedding } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 import { PEACH } from '../consts/colors';
 
@@ -13,13 +13,6 @@ class EventList extends Component {
   static navigationOptions = {
     header: null
   };
-
-
-  onButtonPress() {
-    const { email, password, navigation } = this.props;
-
-    this.props.loginUser({ email, password, navigation });
-  }
 
   onPlusPress() {
     this.props.toAddWedding({ navigation: this.props.navigation });
@@ -130,9 +123,5 @@ const styles = {
 
 
 export default connect(mapStateToProps, {
-  emailChanged,
-  passwordChanged,
-  loginUser,
-  toForgotPassword,
-  toAccCreate
+  toAddWedding
 })(EventList);
