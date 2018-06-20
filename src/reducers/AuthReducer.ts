@@ -10,7 +10,8 @@ import {
     CREATE_USER,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAIL,
-    RESET_PASSWORD
+    RESET_PASSWORD,
+    SIGN_OUT
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -55,6 +56,8 @@ switch (action.type) {
   case RESET_PASSWORD_FAIL:
     return { ...state, error: 'Данный e-mail не зарегистрирован!' };
     break;
+  case SIGN_OUT:
+    return { ...state, INITIAL_STATE };
   default:
     return state;
 }

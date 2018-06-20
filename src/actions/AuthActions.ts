@@ -12,13 +12,22 @@ import { EMAIL_CHANGED,
         CREATE_USER,
         RESET_PASSWORD,
         RESET_PASSWORD_SUCCESS,
-        RESET_PASSWORD_FAIL
+        RESET_PASSWORD_FAIL,
+        SIGN_OUT
 } from './types';
 
 export const toForgotPassword = ({ navigation }) => {
   return (dispatch) => {
     dispatch({ type: VOID_ACTION });
     navigation.navigate('resetPass');
+  };
+};
+
+export const SignOut = ({ navigation }) => {
+  return (dispatch) => {
+    dispatch({ type: SIGN_OUT });
+    firebase.auth().signOut();
+    //navigation.navigate('loading');
   };
 };
 
