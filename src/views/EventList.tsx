@@ -18,6 +18,17 @@ class EventList extends Component {
     this.props.toAddWedding({ navigation: this.props.navigation });
   }
 
+  constructor(props) {
+  super(props);
+  this.state = { url:  '' } ;
+}
+
+ componentWillMount(){
+   const imageRef = firebase.storage().ref().child('abc/wed2.JPG');
+   const sampleImage = imageRef.getDownloadURL().then(result =>  this.setState({ url: result }));
+ }
+
+
   render() {
     return (
       <View style={styles.viewStyle}>
@@ -53,9 +64,8 @@ class EventList extends Component {
               margin: 10
             }}>
               <Image
-                resizeMode='cover'
-                resizeMethod='scale'
-                source={require('../sample.jpg')}
+                style={{width: 100, height: 100}}
+                source={{ uri: `${this.state.url}` }}
               />
             </View>
             <Image
