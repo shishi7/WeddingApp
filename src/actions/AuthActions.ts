@@ -109,14 +109,13 @@ const createUserFail = (dispatch) => {
 
 const helper = (dispatch, user, fullName, navigation) => {
   createUserSuccess(dispatch, user, navigation);
-
+  const user2 = firebase.auth().currentUser;
   const { currentUser } = firebase.auth();
-  currentUser.updateProfile({displayName: fullName});
-  const name = 'name';
-  const phone = 'phone';
-  const shift = 'shift';
-  firebase.database().ref(`/users/${currentUser.uid}/employees`)
-    .push({ name, phone, shift });
+  user2.updateProfile({displayName: fullName});
+  firebase.database().ref(`/users/${currentUser.uid}/events`)
+    .push( fullName );
+  firebase.database().ref(`/users/${currentUser.uid}`)
+    .push( fullName );
 };
 
 export const resetPass = ({ email, navigation }) => {
