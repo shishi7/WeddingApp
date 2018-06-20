@@ -5,22 +5,15 @@ import { Button } from 'react-native-elements';
 import firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate } from '../actions';
+import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate, toAddWedding } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 import { PEACH } from '../consts/colors';
 
-class LoginForm extends Component {
+class EventList extends Component {
   static navigationOptions = {
     header: null
   };
 
-  onEmailChange(text) {
-    this.props.emailChanged(text);
-  }
-
-  onPasswordChange(text) {
-    this.props.passwordChanged(text);
-  }
 
   onButtonPress() {
     const { email, password, navigation } = this.props;
@@ -28,12 +21,8 @@ class LoginForm extends Component {
     this.props.loginUser({ email, password, navigation });
   }
 
-  onForgotPassPress() {
-    this.props.toForgotPassword({ navigation: this.props.navigation });
-  }
-
-  onCreateAccPress() {
-    this.props.toAccCreate({ navigation: this.props.navigation });
+  onPlusPress() {
+    this.props.toAddWedding({ navigation: this.props.navigation });
   }
 
   render() {
@@ -47,6 +36,7 @@ class LoginForm extends Component {
         <Card>
           <CardItem>
             <Button
+                onPress={this.onPlusPress.bind(this)}
                 icon={{
                   name: 'fa-plus-square',
                   size: 30,
@@ -145,4 +135,4 @@ export default connect(mapStateToProps, {
   loginUser,
   toForgotPassword,
   toAccCreate
-})(LoginForm);
+})(EventList);

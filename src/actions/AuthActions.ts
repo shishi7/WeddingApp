@@ -29,6 +29,14 @@ export const toAccCreate = ({ navigation }) => {
   };
 };
 
+export const toAddWedding = ({ navigation }) => {
+  return (dispatch) => {
+    dispatch({ type: VOID_ACTION });
+    navigation.navigate('AddWedding');
+  };
+};
+
+
 export const emailChanged = (text) => {
   return {
     type: EMAIL_CHANGED,

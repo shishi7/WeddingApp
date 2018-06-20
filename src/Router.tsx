@@ -10,6 +10,7 @@ import EventList from './views/EventList';
 import ResetPass from './views/ResetPass';
 import Chat from './views/Chat';
 import Profile from './views/Profile';
+import EventCreationPage from './views/EventCreationPage';
 import { PEACH } from './consts/colors';
 
 
@@ -68,6 +69,7 @@ const Router = createStackNavigator({
   Loading: { screen: Loading },
   Auth: { screen: AuthNavigator},
   Main: { screen: MainNavigator },
+  AddWedding: { screen: EventCreationPage }
 },
 {
   initialRouteName: 'Loading',
