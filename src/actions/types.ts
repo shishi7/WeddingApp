@@ -11,3 +11,4 @@ export const CREATE_USER = 'create_user';
 export const RESET_PASSWORD_SUCCESS = 'reset_password_success';
 export const RESET_PASSWORD_FAIL = 'reset_password_fail';
 export const RESET_PASSWORD = 'reset_password';
+export const SIGN_OUT = 'sign_out';

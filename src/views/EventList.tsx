@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { emailChanged, passwordChanged, loginUser, toForgotPassword, toAccCreate, toAddWedding } from '../actions';
+import { toAddWedding } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
 import { PEACH } from '../consts/colors';
 
@@ -24,6 +24,17 @@ class EventList extends Component {
   onPlusPress() {
     this.props.toAddWedding({ navigation: this.props.navigation });
   }
+
+  constructor(props) {
+  super(props);
+  this.state = { url:  '' } ;
+}
+
+ componentWillMount(){
+   const imageRef = firebase.storage().ref().child('abc/wed2.JPG');
+   const sampleImage = imageRef.getDownloadURL().then(result =>  this.setState({ url: result }));
+ }
+
 
   render() {
     return (
@@ -60,9 +71,8 @@ class EventList extends Component {
               margin: 10
             }}>
               <Image
-                resizeMode='cover'
-                resizeMethod='scale'
-                source={require('../sample.jpg')}
+                style={{width: 100, height: 100}}
+                source={{ uri: `${this.state.url}` }}
               />
             </View>
             <Image
@@ -130,9 +140,5 @@ const styles = {
 
 
 export default connect(mapStateToProps, {
-  emailChanged,
-  passwordChanged,
-  loginUser,
-  toForgotPassword,
-  toAccCreate
+  toAddWedding
 })(EventList);
