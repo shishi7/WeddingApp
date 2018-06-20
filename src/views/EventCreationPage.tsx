@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import { View, Image, TextInput, Text } from 'react-native';
 import { PEACH } from '../consts/colors';
+import { connect } from 'react-redux';
+import { eventNameChanged, description_changed, addEvent } from '../actions';
 import { Card, CardItem } from '../components';
 import { Button } from 'react-native-elements';
+
+
 class EventCreationPage extends Component {
 
   onAddPress() {
-
+    const { name, description } = this.props;
+    //this.props.loginUser({ email, password, navigation });
+    this.props.addEvent({ name, description });
   }
 
-  constructor(props) {
-  super(props);
-  this.state = {text: ''};
-}
+  onNameChange(text){
+    this.props.eventNameChanged(text);
+  }
+
+  onDescriptionChanged(text){
+    this.props.description_changed(text);
+  }
 
   render()
   {
@@ -35,12 +44,18 @@ class EventCreationPage extends Component {
               height: 40,
             }}
             placeholder="Type here to translate!"
-            onChangeText={(text) => this.setState({text})}
+            onChangeText={this.onNameChange.bind(this)}
+            value={this.props.name}
           />
         </View>
 
         <Card>
-          <TextInput multiline style={{ height: 100, backgroundColor: '#ccc' }} />
+          <TextInput
+            multiline
+            style={{ height: 100, backgroundColor: '#ccc' }}
+            onChangeText={this.onDescriptionChanged.bind(this)}
+            value={this.props.description}
+           />
         </Card>
         <Card>
           <Button
@@ -58,6 +73,23 @@ class EventCreationPage extends Component {
                 borderRadius: 8
               }}
             />
+
+            <Button
+                onPress={this.onAddPress.bind(this)}
+                icon={{
+                  name: 'fa-plus-square',
+                  size: 30,
+                  color: 'black'
+                }}
+                containerViewStyle={{width: '100%', marginLeft: 0}}
+                buttonStyle={{
+                  backgroundColor: "#fff",
+                  borderColor: "#000",
+                  borderWidth: 2,
+                  borderRadius: 8
+                }}
+              />
+
         </Card>
       </View>
     )
@@ -100,4 +132,15 @@ const styles ={
   }
 }
 
-export default EventCreationPage;
+const mapStateToProps = state => {
+  return {
+    name: state.event.name,
+    description: state.event.description
+  };
+};
+
+export default connect(mapStateToProps, {
+  eventNameChanged,
+  description_changed,
+  addEvent
+})(EventCreationPage);

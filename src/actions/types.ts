@@ -12,3 +12,6 @@ export const RESET_PASSWORD_SUCCESS = 'reset_password_success';
 export const RESET_PASSWORD_FAIL = 'reset_password_fail';
 export const RESET_PASSWORD = 'reset_password';
 export const SIGN_OUT = 'sign_out';
+export const EVENTNAME_CHANGED = 'event_name_changed';
+export const DESCRIPTION_CHANGED = 'description_changed';
+export const ADD_EVENT = 'add_event';

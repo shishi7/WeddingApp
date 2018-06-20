@@ -13,7 +13,10 @@ import { EMAIL_CHANGED,
         RESET_PASSWORD,
         RESET_PASSWORD_SUCCESS,
         RESET_PASSWORD_FAIL,
-        SIGN_OUT
+        SIGN_OUT,
+        EVENTNAME_CHANGED,
+        DESCRIPTION_CHANGED,
+        ADD_EVENT
 } from './types';
 
 export const toForgotPassword = ({ navigation }) => {
@@ -67,6 +70,31 @@ export const fullNameChanged = (text) => {
   };
 };
 
+export const eventNameChanged = (text) => {
+  return{
+    type: EVENTNAME_CHANGED,
+    payload: text
+  };
+};
+
+export const description_changed = (text) => {
+  return{
+    type: DESCRIPTION_CHANGED,
+    payload: text
+  };
+};
+
+export const addEvent = ({ name, description }) => {
+  return(dispatch) => {
+    dispatch({ type:ADD_EVENT });
+    firebase.database().ref(`/events`)
+      .push().set({
+        name: name,
+        description: description
+      });
+  }
+}
+
 export const loginUser = ({ email, password, navigation }) => {
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
@@ -87,7 +115,6 @@ const loginUserSuccess = (dispatch, user, navigation) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
-  console.log('login success');
   navigation.navigate('Main');
 };
 
