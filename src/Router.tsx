@@ -71,6 +71,7 @@ const Router = createStackNavigator({
   Main: { screen: MainNavigator },
   AddWedding: { screen: EventCreationPage }
 },
+
 {
   initialRouteName: 'Loading',
   headerMode: 'none',
