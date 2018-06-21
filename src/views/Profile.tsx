@@ -30,6 +30,15 @@ class Profile extends Component {
   }
 }
 
-export default connect(undefined, {
+const mapStateToProps = state => {
+  return {
+    email: state.auth.email,
+    password: state.auth.password,
+    error: state.auth.error,
+    loading: state.auth.loading
+  };
+};
+
+export default connect(mapStateToProps, {
   SignOut
 })(Profile);
