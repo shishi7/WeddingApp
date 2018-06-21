@@ -41,14 +41,6 @@ export const toAccCreate = ({ navigation }) => {
   };
 };
 
-export const toAddWedding = ({ navigation }) => {
-  return (dispatch) => {
-    dispatch({ type: VOID_ACTION });
-    navigation.navigate('AddWedding');
-  };
-};
-
-
 export const emailChanged = (text) => {
   return {
     type: EMAIL_CHANGED,
@@ -70,31 +62,6 @@ export const fullNameChanged = (text) => {
   };
 };
 
-export const eventNameChanged = (text) => {
-  return{
-    type: EVENTNAME_CHANGED,
-    payload: text
-  };
-};
-
-export const description_changed = (text) => {
-  return{
-    type: DESCRIPTION_CHANGED,
-    payload: text
-  };
-};
-
-export const addEvent = ({ name, description }) => {
-  return(dispatch) => {
-    dispatch({ type:ADD_EVENT });
-    firebase.database().ref(`/events`)
-      .push().set({
-        name: name,
-        description: description
-      });
-  }
-}
-
 export const loginUser = ({ email, password, navigation }) => {
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
@@ -115,6 +82,7 @@ const loginUserSuccess = (dispatch, user, navigation) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
+  console.log('login success');
   navigation.navigate('Main');
 };
 
@@ -144,6 +112,14 @@ const helper = (dispatch, user, fullName, navigation) => {
   firebase.database().ref(`/users/${currentUser.uid}`)
     .push( fullName );
 };
+const createUserSuccess = (dispatch, user, navigation) => {
+  dispatch({
+    type: CREATE_USER_SUCCESS,
+    payload: user
+  });
+
+  navigation.navigate('Main');
+};
 
 export const resetPass = ({ email, navigation }) => {
   return (dispatch) => {
@@ -167,4 +143,40 @@ const resetPassSuccess = (dispatch, user, navigation) => {
   });
 
   navigation.navigate('login');
+}
+
+export const toAddWedding = ({ navigation }) => {
+  return (dispatch) => {
+    dispatch({ type: VOID_ACTION });
+    navigation.navigate('AddWedding');
+  };
+};
+
+export const eventNameChanged = (text) => {
+  return{
+    type: EVENTNAME_CHANGED,
+    payload: text
+  };
+};
+
+export const description_changed = (text) => {
+  return{
+    type: DESCRIPTION_CHANGED,
+    payload: text
+  };
+};
+
+export const addEvent = ({ name, description }) => {
+  return(dispatch) => {
+    dispatch({ type:ADD_EVENT });
+    firebase.database().ref(`/events`)
+      .push({
+      name: name,
+      description: description
+    })
+      .then((response) => {
+              const key = response.key;
+              console.log(key);
+            })
+  }
 }

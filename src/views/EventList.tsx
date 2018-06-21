@@ -42,7 +42,7 @@ class EventList extends Component {
             <Button
                 onPress={this.onPlusPress.bind(this)}
                 icon={{
-                  name: 'fa-plus-square',
+                  name: 'add-circle',
                   size: 30,
                   color: 'black'
                 }}
