@@ -30,7 +30,7 @@ export const SignOut = ({ navigation }) => {
   return (dispatch) => {
     dispatch({ type: SIGN_OUT });
     firebase.auth().signOut();
-    //navigation.navigate('loading');
+    navigation.navigate('loading');
   };
 };
 

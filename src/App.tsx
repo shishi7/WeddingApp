@@ -9,6 +9,7 @@ import Store from './consts/store';
 class App extends Component {
 
   render() {
+    console.disableYellowBox = true;
     return (
       <Provider store={Store.store}>
         <PersistGate persistor={Store.persistor}>
