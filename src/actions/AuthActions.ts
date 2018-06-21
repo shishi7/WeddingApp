@@ -88,10 +88,14 @@ export const addEvent = ({ name, description }) => {
   return(dispatch) => {
     dispatch({ type:ADD_EVENT });
     firebase.database().ref(`/events`)
-      .push().set({
-        name: name,
-        description: description
-      });
+      .push({
+      name: name,
+      description: description
+    })
+      .then((response) => {
+              const key = response.key;
+              console.log(key);
+            })
   }
 }
 
@@ -115,6 +119,25 @@ const loginUserSuccess = (dispatch, user, navigation) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
+
+  const helper = (dispatch, user, fullName, navigation) => {
+    createUserSuccess(dispatch, user, navigation);
+    const user2 = firebase.auth().currentUser;
+    const { currentUser } = firebase.auth();
+    user2.updateProfile({displayName: fullName});
+    firebase.database().ref(`/users/${currentUser.uid}/events`)
+      .push( fullName );
+    firebase.database().ref(`/users/${currentUser.uid}`)
+      .push( fullName );
+    console.log("LOL");
+  };
+
+  const createUserSuccess = (dispatch, user, navigation) => {
+    dispatch({
+      type: CREATE_USER_SUCCESS,
+      payload: user
+    });
+
   navigation.navigate('Main');
 };
 
@@ -132,17 +155,6 @@ const createUserFail = (dispatch) => {
   dispatch({
     type: CREATE_USER_FAIL
   });
-};
-
-const helper = (dispatch, user, fullName, navigation) => {
-  createUserSuccess(dispatch, user, navigation);
-  const user2 = firebase.auth().currentUser;
-  const { currentUser } = firebase.auth();
-  user2.updateProfile({displayName: fullName});
-  firebase.database().ref(`/users/${currentUser.uid}/events`)
-    .push( fullName );
-  firebase.database().ref(`/users/${currentUser.uid}`)
-    .push( fullName );
 };
 
 export const resetPass = ({ email, navigation }) => {
