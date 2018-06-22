@@ -16,7 +16,9 @@ import { EMAIL_CHANGED,
         SIGN_OUT,
         EVENTNAME_CHANGED,
         DESCRIPTION_CHANGED,
-        ADD_EVENT
+        ADD_EVENT,
+        EVENTS_FETCH_SUCCESS,
+        EVENT_CHOSEN
 } from './types';
 
 export const toForgotPassword = ({ navigation }) => {
@@ -204,3 +206,21 @@ export const addEvent = ({ name, description }) => {
             });
   }
 }
+
+export const eventsFetch = () => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/events`)
+      .on('value', snapshot => {
+        dispatch({ type: EVENTS_FETCH_SUCCESS, payload: snapshot.val() });
+      });
+  };
+};
+
+export const toEvent = ({ navigation, event }) => {
+  return (dispatch) => {
+    dispatch({ type: EVENT_CHOSEN, payload: event });
+    navigation.navigate('Event');
+  };
+};

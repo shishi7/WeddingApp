@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, TouchableNative, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+  TouchableNative,
+  FlatList
+ } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 import firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { toAddWedding } from '../actions';
+import _ from 'lodash';
+
+import { toAddWedding, eventsFetch } from '../actions';
 import { Card, CardItem, Input, CustomButton, Header, Spinner } from '../components';
+import ListItem from './ListItem';
 import { PEACH } from '../consts/colors';
 
 class EventList extends Component {
@@ -18,16 +28,20 @@ class EventList extends Component {
     this.props.toAddWedding({ navigation: this.props.navigation });
   }
 
-  constructor(props) {
-  super(props);
-  this.state = { url:  '' } ;
+
+componentWillMount() {
+  this.createDataSource();
 }
 
- componentWillMount(){
-   const imageRef = firebase.storage().ref().child('abc/wed2.JPG');
-   const sampleImage = imageRef.getDownloadURL().then(result =>  this.setState({ url: result }));
- }
+createDataSource() {
+  this.props.eventsFetch();
+}
 
+ renderRow(event) {
+   return <ListItem event={event}
+                    navigation={ this.props.navigation }
+          />;
+ }
 
   render() {
     return (
@@ -38,45 +52,27 @@ class EventList extends Component {
         />
         </View>
         <Card>
-          <CardItem>
-            <Button
-                onPress={this.onPlusPress.bind(this)}
-                icon={{
-                  name: 'add-circle',
-                  size: 30,
-                  color: 'black'
-                }}
-                containerViewStyle={{width: '100%', marginLeft: 0}}
-                buttonStyle={{
-                  backgroundColor: "#fff",
-                  borderColor: "#000",
-                  borderWidth: 2,
-                  borderRadius: 8
-                }}
-              />
-            </CardItem>
-          <ScrollView>
-            <View style={{
-              flex: 1,
-              overflow: 'hidden',
-              alignItems: 'center',
-              position: 'relative',
-              margin: 10
-            }}>
-              <Image
-                style={{width: 100, height: 100}}
-                source={{ uri: `${this.state.url}` }}
-              />
-            </View>
-            <Image
-              source={require('../sample.jpg')}
+          <Button
+              onPress={this.onPlusPress.bind(this)}
+              icon={{
+                name: 'add-circle',
+                size: 30,
+                color: 'black'
+              }}
+              containerViewStyle={{width: '100%', marginLeft: 0}}
+              buttonStyle={{
+                backgroundColor: "#fff",
+                borderColor: "#000",
+                borderWidth: 2,
+                borderRadius: 8
+              }}
             />
-            <Image
-              source={require('../sample.jpg')}
-            />
-          </ScrollView>
         </Card>
-
+        <FlatList
+          data={this.props.events}
+          renderItem={this.renderRow.bind(this)}
+          keyExtractor={event => event.uid}
+        />
       </View>
     );
   }
@@ -84,10 +80,7 @@ class EventList extends Component {
 
 const mapStateToProps = state => {
   return {
-    email: state.auth.email,
-    password: state.auth.password,
-    error: state.auth.error,
-    loading: state.auth.loading
+    events: state.event.events
   };
 };
 
@@ -133,5 +126,6 @@ const styles = {
 
 
 export default connect(mapStateToProps, {
-  toAddWedding
+  toAddWedding,
+  eventsFetch
 })(EventList);
