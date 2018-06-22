@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { View, Text, TouchableNativeFeedback } from 'react-native';
 import firebase from 'firebase';
@@ -15,7 +16,7 @@ class Profile extends Component {
     return (
       <View>
         <View>
-          <Text> { firebase.auth().currentUser.email } </Text>
+          <Text> { firebase.auth().currentUser.email !== null ? firebase.auth().currentUser.email : '' } </Text>
         </View>
 
         <View>

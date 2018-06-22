@@ -1,12 +1,16 @@
 import {
   EVENTNAME_CHANGED,
   DESCRIPTION_CHANGED,
-  ADD_EVENT
+  ADD_EVENT,
+  EVENTS_FETCH_SUCCESS,
+  EVENT_CHOSEN
 } from  '../actions/types';
 
 const INITIAL_STATE = {
   name: '',
-  description: ''
+  description: '',
+  events: [],
+  event: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -17,6 +21,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, description:action.payload };
     case ADD_EVENT:
       return { ...state, INITIAL_STATE };
+    case EVENTS_FETCH_SUCCESS:
+      return { ...state, events: action.payload };
+    case EVENT_CHOSEN:
+      return { ...state, event: action.payload };
     default:
       return state;
   }

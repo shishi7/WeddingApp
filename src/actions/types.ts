@@ -15,3 +15,5 @@ export const SIGN_OUT = 'sign_out';
 export const EVENTNAME_CHANGED = 'event_name_changed';
 export const DESCRIPTION_CHANGED = 'description_changed';
 export const ADD_EVENT = 'add_event';
+export const EVENTS_FETCH_SUCCESS = 'events_fetch_success';
+export const EVENT_CHOSEN = 'event_chosen';

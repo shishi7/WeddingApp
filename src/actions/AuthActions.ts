@@ -16,7 +16,9 @@ import { EMAIL_CHANGED,
         SIGN_OUT,
         EVENTNAME_CHANGED,
         DESCRIPTION_CHANGED,
-        ADD_EVENT
+        ADD_EVENT,
+        EVENTS_FETCH_SUCCESS,
+        EVENT_CHOSEN
 } from './types';
 
 export const toForgotPassword = ({ navigation }) => {
@@ -103,15 +105,20 @@ const createUserFail = (dispatch) => {
 };
 
 const helper = (dispatch, user, fullName, navigation) => {
+  var arr = ['-LFWLDcN1EECemxKaESF', '-LFWRl04vMJVEAJhlVcA']
   createUserSuccess(dispatch, user, navigation);
   const user2 = firebase.auth().currentUser;
   const { currentUser } = firebase.auth();
   user2.updateProfile({displayName: fullName});
-  firebase.database().ref(`/users/${currentUser.uid}/events`)
-    .push( fullName );
   firebase.database().ref(`/users/${currentUser.uid}`)
-    .push( fullName );
-};
+    .set({ name: fullName });
+  firebase.database().ref(`/users/${currentUser.uid}/events/`)
+    .set( arr );
+/*  firebase.database().ref(`/users/${currentUser.uid}/events/-LFWRl04vMJVEAJhlVcA`)
+    .set({ uid: 'ddd' });
+  firebase.database().ref(`/users/${currentUser.uid}/events/-LFWWAU_oc7oQaa_mmCS`)
+    .set({ uid: 'aa' }); */
+  };
 const createUserSuccess = (dispatch, user, navigation) => {
   dispatch({
     type: CREATE_USER_SUCCESS,
@@ -167,6 +174,7 @@ export const description_changed = (text) => {
 };
 
 export const addEvent = ({ name, description }) => {
+  const key;
   return(dispatch) => {
     dispatch({ type:ADD_EVENT });
     firebase.database().ref(`/events`)
@@ -175,8 +183,44 @@ export const addEvent = ({ name, description }) => {
       description: description
     })
       .then((response) => {
-              const key = response.key;
+//              var arr = ['first', 'second'];
+              key = response.key;
               console.log(key);
-            })
+              const { currentUser } = firebase.auth();
+              var host = [currentUser.uid];
+              firebase.database().ref(`/events/${key}/guests`)
+              .set( host );
+              var list = [];
+/*              firebase.database().ref(`/events/${key}/guests`)
+              .on('value', snapshot => {
+                list = snapshot.val();
+                console.log(list);
+                .on('child_added', data => {
+                  firebase.database().ref(`/events/${key}/guests`)
+                    .once('value', snapshot => {
+                    list = snapshot.val();
+                    list.push('third');
+                    }) */
+               firebase.database().ref(`/events/${key}/guests`)
+               .update( list );
+            });
   }
 }
+
+export const eventsFetch = () => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    firebase.database().ref(`/users/${currentUser.uid}/events`)
+      .on('value', snapshot => {
+        dispatch({ type: EVENTS_FETCH_SUCCESS, payload: snapshot.val() });
+      });
+  };
+};
+
+export const toEvent = ({ navigation, event }) => {
+  return (dispatch) => {
+    dispatch({ type: EVENT_CHOSEN, payload: event });
+    navigation.navigate('Event');
+  };
+};
