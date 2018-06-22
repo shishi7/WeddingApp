@@ -5,30 +5,63 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import PhotoGrid from 'react-native-photo-grid';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { toEvent } from '../actions';
 
+
 class Event extends Component {
 
-  constructor(props) {
-   super(props);
-   this.state = { url:  '' } ;
+  constructor() {
+    super();
+    this.state = { items: [] };
   }
 
-  componentWillMount(){
-    const imageRef = firebase.storage().ref().child(`images/${this.props.event}/main.jpg`);
-    const sampleImage = imageRef.getDownloadURL().then(result =>  this.setState({ url: result }));
+  componentDidMount() {
+    // Build an array of 60 photos
+    let items = Array.apply(null, Array(60)).map((v, i) => {
+      return { id: i, src: 'http://placehold.it/200x200?text='+(i+1) }
+    });
+    this.setState({ items });
   }
 
   render() {
-    return (
-        <Image
-           style={{ flex: 1, height: 200, resizeMode: 'contain' }}
-           source={{ uri: `${this.state.url}` }}
-        />
+    return(
+      <PhotoGrid
+        data = { this.state.items }
+        itemsPerRow = { 3 }
+        itemMargin = { 1 }
+        renderHeader = { this.renderHeader }
+        renderItem = { this.renderItem }
+      />
     );
   }
+
+  renderHeader() {
+    return(
+      <Text>I'm on top!</Text>
+    );
+  }
+
+  renderItem(item, itemSize) {
+    return(
+      <TouchableOpacity
+        key = { item.id }
+        style = {{ width: itemSize, height: itemSize }}
+        onPress = { () => {
+          // Do Something
+        }}>
+        <Image
+          resizeMode = "cover"
+          style = {{ flex: 1 }}
+          source = {{ uri: item.src }}
+        />
+      </TouchableOpacity>
+    )
+  }
+
+
 }
 
 const mapStateToProps = state => {
