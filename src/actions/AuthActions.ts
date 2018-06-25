@@ -18,7 +18,9 @@ import { EMAIL_CHANGED,
         DESCRIPTION_CHANGED,
         ADD_EVENT,
         EVENTS_FETCH_SUCCESS,
-        EVENT_CHOSEN
+        EVENT_CHOSEN,
+        INVITE_CODE_CHANGED,
+        JOIN_WEDDING
 } from './types';
 
 export const toForgotPassword = ({ navigation }) => {
@@ -173,6 +175,37 @@ export const description_changed = (text) => {
   };
 };
 
+export const invite_code_changed = (text) => {
+  return {
+      type: INVITE_CODE_CHANGED,
+      payload: text
+  };
+};
+
+export const joinWedding = ( inviteCode ) => {
+  var list = [];
+  return(dispatch) => {
+    firebase.database().ref(`events/${inviteCode}/guests`)
+    .on('value', snapshot => {
+      list = snapshot.val();
+      if (list === null ){
+        console.log('Nope')
+      }
+      else {
+          firebase.database().ref(`/events/${inviteCode}/guests`)
+          .once('value', snapshot => {
+          list = snapshot.val();
+          const { currentUser } = firebase.auth();
+          if (list.includes(currentUser.uid)){
+          list.push(currentUser.uid);
+          }
+          firebase.database().ref(`/events/${inviteCode}/guests`)
+          .update( list );
+      })
+    }
+    });
+}
+}
 export const addEvent =  ({ name, description, navigation }) => {
 
 

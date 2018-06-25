@@ -30,7 +30,7 @@ const uploadImage = (uri, mime = 'application/octet-stream') => {
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
     const sessionId = new Date().getTime()
     let uploadBlob = null
-    const imageRef = storage.ref('images').child('this.props.keyId').child('main')
+    const imageRef = storage.ref('images').child(`${this.props.keyId}`).child('main')
 
     fs.readFile(uploadUri, 'base64')
       .then((data) => {
@@ -66,7 +66,13 @@ class AvatarSet extends Component {
 
     ImagePicker.launchImageLibrary({}, response  => {
       uploadImage(response.uri)
-        .then(url => this.setState({ uploadURL: url }))
+        .then(url => {
+          var arr = [];
+          arr.push(url);
+          this.setState({ uploadURL: url });
+          firebase.database().ref(`events/${this.props.keyId}/photos`)
+            .set( arr )
+      })
         .catch(error => console.log(error))
     })
   }

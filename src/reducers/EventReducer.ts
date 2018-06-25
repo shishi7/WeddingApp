@@ -3,7 +3,9 @@ import {
   DESCRIPTION_CHANGED,
   ADD_EVENT,
   EVENTS_FETCH_SUCCESS,
-  EVENT_CHOSEN
+  EVENT_CHOSEN,
+  INVITE_CODE_CHANGED,
+  JOIN_WEDDING
 } from  '../actions/types';
 
 const INITIAL_STATE = {
@@ -11,7 +13,8 @@ const INITIAL_STATE = {
   description: '',
   events: [],
   event: '',
-  keyId: ''
+  keyId: '',
+  inviteCode: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -26,6 +29,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, events: action.payload };
     case EVENT_CHOSEN:
       return { ...state, event: action.payload };
+    case INVITE_CODE_CHANGED:
+      return { ...state, inviteCode: action.payload }
+    case JOIN_WEDDING:
+      return { ...state, inviteCode: action.payload}
     default:
       return state;
   }

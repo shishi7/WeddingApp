@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { toEvent } from '../actions';
+import { Button } from 'react-native-elements';
 
 class EventGallery extends Component {
 
@@ -24,6 +25,7 @@ class EventGallery extends Component {
 
   render() {
    return (
+
      <Gallery
        style={{ flex: 1, backgroundColor: 'black' }}
        images={[

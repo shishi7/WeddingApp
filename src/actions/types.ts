@@ -17,3 +17,5 @@ export const DESCRIPTION_CHANGED = 'description_changed';
 export const ADD_EVENT = 'add_event';
 export const EVENTS_FETCH_SUCCESS = 'events_fetch_success';
 export const EVENT_CHOSEN = 'event_chosen';
+export const INVITE_CODE_CHANGED = 'invite_code_changed';
+export const JOIN_WEDDING = 'join_wedding';
