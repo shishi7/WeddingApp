@@ -5,62 +5,34 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
-import PhotoGrid from 'react-native-photo-grid';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
-import { toGallery } from '../actions';
-
+import { toEvent } from '../actions';
 
 class Event extends Component {
 
-  constructor() {
-    super();
-    this.state = { items: [] };
+  constructor(props) {
+   super(props);
+   this.state = { url:  '' } ;
   }
 
-  componentDidMount() {
-    // Build an array of 60 photos
-    let items = Array.apply(null, Array(60)).map((v, i) => {
-      return { id: i, src: 'http://placehold.it/200x200?text='+(i+1) }
-    });
-    this.setState({ items });
+  componentWillMount(){
+    const imageRef = firebase.storage().ref().child(`images/${this.props.event}/main.jpg`);
+    const sampleImage = imageRef.getDownloadURL().then(result =>  this.setState({ url: result }));
   }
+
+  //Upload
+  //arr = [nameOfPhoto];
+
 
   render() {
-    return(
-      <PhotoGrid
-        data = { this.state.items }
-        itemsPerRow = { 3 }
-        itemMargin = { 1 }
-        renderHeader = { this.renderHeader }
-        renderItem = { this.renderItem.bind(this) }
-      />
-    );
-  }
-
-  renderHeader() {
-    return(
-      <Text>I'm on top!</Text>
-    );
-  }
-
-  renderItem(item, itemSize) {
-    return(
-      <TouchableOpacity
-        key = { item.id }
-        style = {{ width: itemSize, height: itemSize }}
-        onPress={ this.props.toGallery({ navigation: this.props.navigation, event: this.props.event }) }
-      >
+    return (
         <Image
-          resizeMode = "cover"
-          style = {{ flex: 1 }}
-          source = {{ uri: item.src }}
+           style={{ flex: 1, height: 200, resizeMode: 'contain' }}
+           source={{ uri: `${this.state.url}` }}
         />
-      </TouchableOpacity>
-    )
+    );
   }
-
-
 }
 
 const mapStateToProps = state => {
@@ -70,5 +42,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  toGallery
 })(Event);
