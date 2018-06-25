@@ -12,6 +12,8 @@ import Chat from './views/Chat';
 import Profile from './views/Profile';
 import EventCreationPage from './views/EventCreationPage';
 import Event from './views/Event';
+import AvatarSet from './views/AvatarSet';
+import EventGallery from './views/EventGallery';
 import { PEACH } from './consts/colors';
 
 
@@ -71,7 +73,9 @@ const Router = createStackNavigator({
   Auth: { screen: AuthNavigator},
   Main: { screen: MainNavigator },
   AddWedding: { screen: EventCreationPage },
-  Event: { screen: Event }
+  Avatar: { screen: AvatarSet },
+  Event: { screen: Event },
+  Gallery: { screen: EventGallery }
 },
 
 {

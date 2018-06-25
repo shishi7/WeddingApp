@@ -10,7 +10,8 @@ const INITIAL_STATE = {
   name: '',
   description: '',
   events: [],
-  event: ''
+  event: '',
+  keyId: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -20,7 +21,7 @@ export default (state = INITIAL_STATE, action) => {
     case DESCRIPTION_CHANGED:
       return { ...state, description:action.payload };
     case ADD_EVENT:
-      return { ...state, INITIAL_STATE };
+      return { ...state, keyId: action.payload };
     case EVENTS_FETCH_SUCCESS:
       return { ...state, events: action.payload };
     case EVENT_CHOSEN:
