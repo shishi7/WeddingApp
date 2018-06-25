@@ -173,37 +173,45 @@ export const description_changed = (text) => {
   };
 };
 
-export const addEvent = ({ name, description }) => {
+export const addEvent =  ({ name, description, navigation }) => {
+
+
+return(dispatch) => {
   const key;
-  return(dispatch) => {
-    dispatch({ type:ADD_EVENT });
-    firebase.database().ref(`/events`)
-      .push({
-      name: name,
-      description: description
-    })
-      .then((response) => {
+  firebase.database().ref(`/events`)
+    .push({
+    name: name,
+    description: description
+  })
+    .then((response) => {
 //              var arr = ['first', 'second'];
-              key = response.key;
-              console.log(key);
-              const { currentUser } = firebase.auth();
-              var host = [currentUser.uid];
-              firebase.database().ref(`/events/${key}/guests`)
-              .set( host );
-              var list = [];
+            key = response.key;
+            //console.log(key);
+            const { currentUser } = firebase.auth();
+            var host = [currentUser.uid];
+            firebase.database().ref(`/events/${key}/guests`)
+            .set( host );
+            var list = [];
 /*              firebase.database().ref(`/events/${key}/guests`)
-              .on('value', snapshot => {
-                list = snapshot.val();
-                console.log(list);
-                .on('child_added', data => {
-                  firebase.database().ref(`/events/${key}/guests`)
-                    .once('value', snapshot => {
-                    list = snapshot.val();
-                    list.push('third');
-                    }) */
-               firebase.database().ref(`/events/${key}/guests`)
-               .update( list );
-            });
+            .on('value', snapshot => {
+              list = snapshot.val();
+              console.log(list);
+              .on('child_added', data => {
+                firebase.database().ref(`/events/${key}/guests`)
+                  .once('value', snapshot => {
+                  list = snapshot.val();
+                  list.push('third');
+                  }) */
+             firebase.database().ref(`/events/${key}/guests`)
+             .update( list );
+
+             console.log('finished');
+          })
+          .then(() => {
+              console.log(key)
+              dispatch({ type:ADD_EVENT, payload: key });
+              navigation.navigate('Avatar');
+    })
   }
 }
 
@@ -222,5 +230,14 @@ export const toEvent = ({ navigation, event }) => {
   return (dispatch) => {
     dispatch({ type: EVENT_CHOSEN, payload: event });
     navigation.navigate('Event');
+    console.log(event);
+  };
+};
+
+export const toGallery = ({ navigation, event }) => {
+  return (dispatch) => {
+    dispatch({ type: EVENT_CHOSEN, payload: event });
+    navigation.navigate('Gallery');
+    console.log(event);
   };
 };
