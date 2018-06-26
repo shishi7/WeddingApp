@@ -25,7 +25,6 @@ class EventGallery extends Component {
 
   render() {
    return (
-
      <Gallery
        style={{ flex: 1, backgroundColor: 'black' }}
        images={[

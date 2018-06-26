@@ -12,7 +12,6 @@ import { Button } from 'react-native-elements';
 import firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import _ from 'lodash';
 import Dialog from 'react-native-dialog';
 
 import { toAddWedding, eventsFetch, invite_code_changed, joinWedding } from '../actions';

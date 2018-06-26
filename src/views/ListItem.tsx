@@ -10,14 +10,14 @@ import firebase from 'firebase';
 import { toEvent } from '../actions';
 
 class ListItem extends Component {
-  
+
   constructor(props) {
    super(props);
    this.state = { url:  '' } ;
   }
 
   componentWillMount(){
-    const imageRef = firebase.storage().ref().child(`images/${this.props.event.item}/main.jpg`);
+    const imageRef = firebase.storage().ref().child(`images/${this.props.event.item}/main`);
     const sampleImage = imageRef.getDownloadURL().then(result =>  this.setState({ url: result }));
   }
 

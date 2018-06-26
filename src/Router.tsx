@@ -73,8 +73,8 @@ const Router = createStackNavigator({
   Auth: { screen: AuthNavigator},
   Main: { screen: MainNavigator },
   AddWedding: { screen: EventCreationPage },
-  Avatar: { screen: AvatarSet },
   Event: { screen: Event },
+  Avatar: { screen: AvatarSet },
   Gallery: { screen: EventGallery }
 },
 

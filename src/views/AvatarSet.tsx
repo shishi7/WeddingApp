@@ -25,12 +25,12 @@ const fs = RNFetchBlob.fs
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
 window.Blob = Blob
 
-const uploadImage = (uri, mime = 'application/octet-stream') => {
+const uploadImage = (keyId, uri, mime = 'application/octet-stream') => {
   return new Promise((resolve, reject) => {
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
     const sessionId = new Date().getTime()
     let uploadBlob = null
-    const imageRef = storage.ref('images').child(`${this.props.keyId}`).child('main')
+    const imageRef = storage.ref('images').child(`${keyId}`).child('main')
 
     fs.readFile(uploadUri, 'base64')
       .then((data) => {
@@ -65,14 +65,19 @@ class AvatarSet extends Component {
     this.setState({ uploadURL: '' })
 
     ImagePicker.launchImageLibrary({}, response  => {
-      uploadImage(response.uri)
+      uploadImage(this.props.keyId, response.uri)
         .then(url => {
-          var arr = [];
-          arr.push(url);
-          this.setState({ uploadURL: url });
-          firebase.database().ref(`events/${this.props.keyId}/photos`)
-            .set( arr )
-      })
+          const { currentUser } = firebase.auth();
+          firebase.database().ref(`/users/${currentUser.uid}/events`)
+          .once('value', snapshot => {
+            var listOfEvents =[];
+            listOfEvents = snapshot.val();
+            if (listOfEvents !== null) listOfEvents.push(this.props.keyId);
+            else listOfEvents = [this.props.keID];
+            firebase.database().ref(`/users/${currentUser.uid}/events`)
+            .update( listOfEvents );
+          })
+        })
         .catch(error => console.log(error))
     })
   }

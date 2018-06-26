@@ -107,15 +107,12 @@ const createUserFail = (dispatch) => {
 };
 
 const helper = (dispatch, user, fullName, navigation) => {
-  var arr = ['-LFWLDcN1EECemxKaESF', '-LFWRl04vMJVEAJhlVcA']
   createUserSuccess(dispatch, user, navigation);
   const user2 = firebase.auth().currentUser;
   const { currentUser } = firebase.auth();
   user2.updateProfile({displayName: fullName});
   firebase.database().ref(`/users/${currentUser.uid}`)
     .set({ name: fullName });
-  firebase.database().ref(`/users/${currentUser.uid}/events/`)
-    .set( arr );
 /*  firebase.database().ref(`/users/${currentUser.uid}/events/-LFWRl04vMJVEAJhlVcA`)
     .set({ uid: 'ddd' });
   firebase.database().ref(`/users/${currentUser.uid}/events/-LFWWAU_oc7oQaa_mmCS`)
@@ -183,32 +180,53 @@ export const invite_code_changed = (text) => {
 };
 
 export const joinWedding = ( inviteCode ) => {
-  var list = [];
+  const { currentUser } = firebase.auth();
+  console.log(currentUser.uid)
+  var listOfGuests = [];
+  var listOfEvents = [];
   return(dispatch) => {
     firebase.database().ref(`events/${inviteCode}/guests`)
     .on('value', snapshot => {
-      list = snapshot.val();
-      if (list === null ){
+      listOfGuests = snapshot.val();
+      if (listOfGuests === null ){
         console.log('Nope')
       }
       else {
           firebase.database().ref(`/events/${inviteCode}/guests`)
           .once('value', snapshot => {
-          list = snapshot.val();
-          const { currentUser } = firebase.auth();
-          if (list.includes(currentUser.uid)){
-          list.push(currentUser.uid);
+          listOfGuests = snapshot.val();
+          if (!listOfGuests.includes(currentUser.uid)) {
+            listOfGuests.push(currentUser.uid);
+            firebase.database().ref(`/users/${currentUser.uid}/events`)
+            .on('value', snap => {
+              listOfEvents = snap.val();
+              if (listOfEvents !== null){
+                if (!listOfEvents.includes(inviteCode)){
+                  listOfEvents.push(inviteCode);
+                  firebase.database().ref(`users/${currentUser.uid}/events`)
+                  .set( listOfEvents );
+              }
+            }
+            else {
+              console.log(inviteCode);
+              listOfEvents = [ inviteCode ];
+              firebase.database().ref(`users/${currentUser.uid}/events`)
+              .set( listOfEvents );
+            }
+            })
+          }
+          else {
+            console.log('No')
           }
           firebase.database().ref(`/events/${inviteCode}/guests`)
-          .update( list );
+          .update( listOfGuests );
       })
     }
     });
 }
 }
+
 export const addEvent =  ({ name, description, navigation }) => {
-
-
 return(dispatch) => {
   const key;
   firebase.database().ref(`/events`)
@@ -224,7 +242,6 @@ return(dispatch) => {
             var host = [currentUser.uid];
             firebase.database().ref(`/events/${key}/guests`)
             .set( host );
-            var list = [];
 /*              firebase.database().ref(`/events/${key}/guests`)
             .on('value', snapshot => {
               list = snapshot.val();
@@ -235,9 +252,6 @@ return(dispatch) => {
                   list = snapshot.val();
                   list.push('third');
                   }) */
-             firebase.database().ref(`/events/${key}/guests`)
-             .update( list );
-
              console.log('finished');
           })
           .then(() => {
