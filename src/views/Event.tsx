@@ -4,14 +4,17 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Platform
+  Platform,
+  FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
-import { toEvent } from '../actions';
+import { toEvent, fetchImages } from '../actions';
 import { Button } from 'react-native-elements';
-import ImagePicker from 'react-native-image-picker'
-import RNFetchBlob from 'react-native-fetch-blob'
+import ImagePicker from 'react-native-image-picker';
+import RNFetchBlob from 'react-native-fetch-blob';
+
+import ImageRender from './ImageRender';
 
 
 const storage = firebase.storage()
@@ -52,14 +55,17 @@ class Event extends Component {
 
   constructor(props) {
    super(props);
-   this.state = { uploadURL: null, url: '' }
+   this.state = {}
   }
 
   componentWillMount(){
-    const imageRef = firebase.storage().ref().child(`images/${this.props.event}/main`);
-    const sampleImage = imageRef.getDownloadURL().then(result =>  {
-      this.setState({ url: result })
-    });
+    this.props.fetchImages(this.props.event);
+  }
+
+  renderImage(image) {
+    return <ImageRender image={image}
+                  navigation={ this.props.navigation }
+           />;
   }
 
   //Upload
@@ -91,11 +97,10 @@ class Event extends Component {
   render() {
     return (
       <View>
-        <View>
         <Button
             onPress={ () => this._pickImage() }
             icon={{
-              name: 'fa-plus-square',
+              name: 'add-circle',
               size: 30,
               color: 'black'
             }}
@@ -107,13 +112,13 @@ class Event extends Component {
               borderRadius: 8
             }}
           />
-        </View>
-        <View>
-          <Image
-            source={{ uri: this.state.url }}
-            style={{ height: 200, resizeMode: 'contain' }}
+          <FlatList
+            data={this.props.images}
+            numColumns={3}
+            renderItem={this.renderImage.bind(this)}
+            keyExtractor={(item, index) => index.toString()}
+
           />
-        </View>
       </View>
     );
   }
@@ -121,9 +126,11 @@ class Event extends Component {
 
 const mapStateToProps = state => {
   return {
-    event: state.event.event
+    event: state.event.event,
+    images: state.event.images
   };
 };
 
 export default connect(mapStateToProps, {
+  fetchImages
 })(Event);

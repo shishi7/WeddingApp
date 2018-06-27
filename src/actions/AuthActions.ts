@@ -20,7 +20,8 @@ import { EMAIL_CHANGED,
         EVENTS_FETCH_SUCCESS,
         EVENT_CHOSEN,
         INVITE_CODE_CHANGED,
-        JOIN_WEDDING
+        JOIN_WEDDING,
+        IMAGES_FETCH_SUCCESS
 } from './types';
 
 export const toForgotPassword = ({ navigation }) => {
@@ -269,6 +270,15 @@ export const eventsFetch = () => {
     firebase.database().ref(`/users/${currentUser.uid}/events`)
       .on('value', snapshot => {
         dispatch({ type: EVENTS_FETCH_SUCCESS, payload: snapshot.val() });
+      });
+  };
+};
+
+export const fetchImages = (event) => {
+  return (dispatch) => {
+    firebase.database().ref(`/events/${event}/photos`)
+      .on('value', snapshot => {
+        dispatch({ type: IMAGES_FETCH_SUCCESS, payload: snapshot.val() });
       });
   };
 };

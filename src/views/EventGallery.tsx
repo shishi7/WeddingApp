@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Gallery from 'react-native-image-gallery';
 import {
   View,
   Text,
@@ -10,46 +9,40 @@ import { connect } from 'react-redux';
 import firebase from 'firebase';
 import { toEvent } from '../actions';
 import { Button } from 'react-native-elements';
+import Gallery from 'react-native-photo-gallery';
 
 class EventGallery extends Component {
 
   constructor(props) {
    super(props);
-   this.state = { url:  '' } ;
+   this.state = {}
   }
 
   componentWillMount(){
-    const imageRef = firebase.storage().ref().child(`images/${this.props.event}/main.jpg`);
-    const sampleImage = imageRef.getDownloadURL().then(result =>  this.setState({ url: result }));
+    let data = [];
+    const { images } = this.props;
+    for(var i = 0; i < images.length; i++)
+    {
+      data[i] = {
+        id: i.toString(),
+        image: { uri: `${images[i]}` }
+      };
+      console.log(data[i]);
+    }
+
+    this.setState({ dataSource: data });
+
   }
 
   render() {
-   return (
-     <Gallery
-       style={{ flex: 1, backgroundColor: 'black' }}
-       images={[
-         { source: { uri: 'https://i.ebayimg.com/images/g/JE0AAOSwUEVYD3X5/s-l225.jpg'}, dimensions: { width: 150, height: 150 } },
-         { source: { uri: 'http://i.imgur.com/XP2BE7q.jpg' } },
-         { source: { uri: 'http://i.imgur.com/5nltiUd.jpg' } },
-         { source: { uri: 'http://i.imgur.com/6vOahbP.jpg' } },
-         { source: { uri: 'http://i.imgur.com/kj5VXtG.jpg' } }
-       ]}
-     />
-   );
- }
- /*render() {
-    return (
-        <Image
-           style={{ flex: 1, height: 200, resizeMode: 'contain' }}
-           source={{ uri: `${this.state.url}` }}
-        />
-    );
-  }*/
+    return <Gallery data={this.state.dataSource} />;
+  }
 }
 
 const mapStateToProps = state => {
   return {
-    event: state.event.event
+    event: state.event.event,
+    images: state.event.images
   };
 };
 

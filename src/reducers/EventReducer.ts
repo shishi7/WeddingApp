@@ -5,7 +5,8 @@ import {
   EVENTS_FETCH_SUCCESS,
   EVENT_CHOSEN,
   INVITE_CODE_CHANGED,
-  JOIN_WEDDING
+  JOIN_WEDDING,
+  IMAGES_FETCH_SUCCESS
 } from  '../actions/types';
 
 const INITIAL_STATE = {
@@ -14,7 +15,8 @@ const INITIAL_STATE = {
   events: [],
   event: '',
   keyId: '',
-  inviteCode: ''
+  inviteCode: '',
+  images: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -33,6 +35,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, inviteCode: action.payload }
     case JOIN_WEDDING:
       return { ...state, inviteCode: action.payload}
+    case IMAGES_FETCH_SUCCESS:
+      return { ...state, images: action.payload };
     default:
       return state;
   }
