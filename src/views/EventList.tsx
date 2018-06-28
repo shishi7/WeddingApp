@@ -85,42 +85,52 @@ onCodeChange(text){
           <Image
             source={require('../small_logo.png')}
           />
-          <Button
-              onPress={this.showDialog.bind(this)}
-              icon={{
-                name: 'add-circle',
-                size: 20,
-                color: 'black'
-              }}
-              containerViewStyle={{width: '30%'}}
-              buttonStyle={{
-                backgroundColor: "#fff",
-                borderColor: "#000",
-                borderWidth: 2,
-                borderRadius: 8,
-                width: 60,
-                height: 60,
-              }}
-            />
 
         </View>
-        <Card>
-          <Button
-              onPress={this.onPlusPress.bind(this)}
-              icon={{
-                name: 'add-circle',
-                size: 30,
-                color: 'black'
+
+        <View
+          style={{ flexDirection: 'row' }}
+        >
+          <View
+            style={{ flex: 1 }}
+          >
+            <Button
+              title="Join"
+              onPress={this.showDialog.bind(this)}
+              color='black'
+              titleStyle={{ fontWeight: "700", color: "#ffffff" }}
+              buttonStyle={{
+                backgroundColor: 'white',
+                height: 45,
+                borderColor: "black",
+                borderWidth: 2,
+                borderRadius: 1
               }}
               containerViewStyle={{width: '100%', marginLeft: 0}}
-              buttonStyle={{
-                backgroundColor: "#fff",
-                borderColor: "#000",
-                borderWidth: 2,
-                borderRadius: 8
-              }}
+              containerStyle={{ marginTop: 20 }}
             />
-        </Card>
+          </View>
+          <View
+            style={{ flex: 1 }}
+          >
+            <Button
+              title="Create"
+              onPress={this.onPlusPress.bind(this)}
+              color='black'
+              titleStyle={{ fontWeight: "700", color: "#ffffff" }}
+              buttonStyle={{
+                backgroundColor: 'white',
+                height: 45,
+                borderColor: "black",
+                borderWidth: 2,
+                borderRadius: 1
+              }}
+              containerViewStyle={{width: '100%', marginLeft: 0}}
+              containerStyle={{ marginTop: 20 }}
+            />
+          </View>
+        </View>
+
         <FlatList
           data={this.props.events}
           renderItem={this.renderRow.bind(this)}

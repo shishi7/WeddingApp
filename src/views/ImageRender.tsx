@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  TouchableNativeFeedback,
   Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -21,15 +22,19 @@ class ImageRender extends Component {
 
   render() {
     return (
-      <TouchableOpacity
-        onPress={this.onImagePress.bind(this)}
-        style={{ flex: 1 }}
+      <View
+        style={{ width: itemWidth }}
+
       >
-        <Image
-           style={{ flex: 1, height: 200, width: itemWidth }}
-           source={{ uri: `${this.props.image.item}` }}
-        />
-      </TouchableOpacity>
+        <TouchableNativeFeedback
+          onPress={this.onImagePress.bind(this)}
+        >
+          <Image
+             style={{ height: 200, width: itemWidth }}
+             source={{ uri: `${this.props.image.item}` }}
+          />
+        </TouchableNativeFeedback>
+      </View>
     );
   }
 }

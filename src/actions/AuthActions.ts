@@ -107,6 +107,12 @@ const createUserFail = (dispatch) => {
   });
 };
 
+function getInviteCode(k) {
+  var inviteC = k;
+  inviteC = inviteC.substr(3,7);
+  return inviteC;
+}
+
 const helper = (dispatch, user, fullName, navigation) => {
   createUserSuccess(dispatch, user, navigation);
   const user2 = firebase.auth().currentUser;
@@ -166,7 +172,9 @@ export const eventNameChanged = (text) => {
   };
 };
 
+
 export const description_changed = (text) => {
+
   return{
     type: DESCRIPTION_CHANGED,
     payload: text
@@ -186,14 +194,23 @@ export const joinWedding = ( inviteCode ) => {
   var listOfGuests = [];
   var listOfEvents = [];
   return(dispatch) => {
-    firebase.database().ref(`events/${inviteCode}/guests`)
-    .on('value', snapshot => {
+    firebase.database().ref('/events/')
+    .orderByChild('inviteCode').equalTo(inviteCode)
+    .on('value', snaps => {
+      const snapKey;
+      console.log(snaps.val());
+      snaps.forEach(function(childSnapshot) {
+        snapKey = childSnapshot.key;
+      });
+      console.log("sk " + snapKey);
+      firebase.database().ref(`/events/${snapKey}/guests`)
+      .once('value', snapshot => {
       listOfGuests = snapshot.val();
       if (listOfGuests === null ){
         console.log('Nope')
       }
       else {
-          firebase.database().ref(`/events/${inviteCode}/guests`)
+          firebase.database().ref(`/events/${snapKey}/guests`)
           .once('value', snapshot => {
           listOfGuests = snapshot.val();
           if (!listOfGuests.includes(currentUser.uid)) {
@@ -202,15 +219,15 @@ export const joinWedding = ( inviteCode ) => {
             .on('value', snap => {
               listOfEvents = snap.val();
               if (listOfEvents !== null){
-                if (!listOfEvents.includes(inviteCode)){
-                  listOfEvents.push(inviteCode);
+                if (!listOfEvents.includes(snapKey)){
+                  listOfEvents.push(snapKey);
                   firebase.database().ref(`users/${currentUser.uid}/events`)
                   .set( listOfEvents );
               }
             }
             else {
-              console.log(inviteCode);
-              listOfEvents = [ inviteCode ];
+              console.log('inv' + snapKey);
+              listOfEvents = [ snapKey ];
               firebase.database().ref(`users/${currentUser.uid}/events`)
               .set( listOfEvents );
             }
@@ -219,30 +236,33 @@ export const joinWedding = ( inviteCode ) => {
           else {
             console.log('No')
           }
-          firebase.database().ref(`/events/${inviteCode}/guests`)
+          firebase.database().ref(`/events/${snapKey}/guests`)
           .update( listOfGuests );
       })
     }
     });
+})
 }
 }
 
 export const addEvent =  ({ name, description, navigation }) => {
 return(dispatch) => {
-  const key;
+  const eventKey;
   firebase.database().ref(`/events`)
-    .push({
-    name: name,
-    description: description
-  })
+    .push()
     .then((response) => {
-//              var arr = ['first', 'second'];
-            key = response.key;
-            //console.log(key);
+            eventKey = response.key;
             const { currentUser } = firebase.auth();
             var host = [currentUser.uid];
-            firebase.database().ref(`/events/${key}/guests`)
-            .set( host );
+              console.log(eventKey);
+            firebase.database().ref(`/events/${eventKey}`)
+              .set({
+                name: name,
+                description: description,
+                inviteCode: getInviteCode(eventKey)
+              })
+              firebase.database().ref(`/events/${eventKey}/guests`)
+                .set( host );
 /*              firebase.database().ref(`/events/${key}/guests`)
             .on('value', snapshot => {
               list = snapshot.val();
@@ -253,11 +273,10 @@ return(dispatch) => {
                   list = snapshot.val();
                   list.push('third');
                   }) */
-             console.log('finished');
           })
           .then(() => {
-              console.log(key)
-              dispatch({ type:ADD_EVENT, payload: key });
+              console.log(eventKey)
+              dispatch({ type:ADD_EVENT, payload: eventKey });
               navigation.navigate('Avatar');
     })
   }

@@ -112,13 +112,12 @@ class Event extends Component {
               borderRadius: 8
             }}
           />
-          <FlatList
-            data={this.props.images}
-            numColumns={3}
-            renderItem={this.renderImage.bind(this)}
-            keyExtractor={(item, index) => index.toString()}
-
-          />
+            <FlatList
+              data={this.props.images}
+              numColumns={3}
+              renderItem={this.renderImage.bind(this)}
+              keyExtractor={(item, index) => index.toString()}
+            />
       </View>
     );
   }
