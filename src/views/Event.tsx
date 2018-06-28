@@ -13,6 +13,7 @@ import { toEvent, fetchImages } from '../actions';
 import { Button } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
 import RNFetchBlob from 'react-native-fetch-blob';
+import Dialog from 'react-native-dialog';
 
 import ImageRender from './ImageRender';
 
@@ -52,6 +53,18 @@ const uploadImage = (event, uri, mime = 'application/octet-stream') => {
 }
 
 class Event extends Component {
+
+  state = {
+    dialogVisible: false
+  };
+
+  showDialog = () => {
+    this.setState({ dialogVisible: true });
+  };
+
+  handleCancel() {
+    this.setState({ dialogVisible: false})
+  }
 
   constructor(props) {
    super(props);
@@ -97,6 +110,19 @@ class Event extends Component {
   render() {
     return (
       <View>
+        <Dialog.Container
+          visible={this.state.dialogVisible}>
+          <Dialog.Title>Invite code</Dialog.Title>
+          <Dialog.Description>
+            The invite code:
+          </Dialog.Description>
+          <Dialog.Input
+            label = {this.props.event}
+            editable= {false}
+          />
+          <Dialog.Button label="Cancel" onPress={this.handleCancel.bind(this)} />
+        </Dialog.Container>
+
         <View
           style={{ flexDirection: 'row' }}
         >
@@ -123,7 +149,7 @@ class Event extends Component {
         style={{ flex: 1 }}
       >
           <Button
-              onPress={ () => this._pickImage() }
+              onPress={this.showDialog.bind(this)}
               icon={{
                 name: 'vpn-key',
                 size: 30,

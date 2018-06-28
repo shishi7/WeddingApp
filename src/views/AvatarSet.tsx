@@ -73,7 +73,8 @@ class AvatarSet extends Component {
             var listOfEvents =[];
             listOfEvents = snapshot.val();
             if (listOfEvents !== null) listOfEvents.push(this.props.keyId);
-            else listOfEvents = [this.props.keID];
+            else listOfEvents = [this.props.keyId];
+            console.log(listOfEvents);
             firebase.database().ref(`/users/${currentUser.uid}/events`)
             .update( listOfEvents );
           })

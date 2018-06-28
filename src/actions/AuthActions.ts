@@ -120,10 +120,6 @@ const helper = (dispatch, user, fullName, navigation) => {
   user2.updateProfile({displayName: fullName});
   firebase.database().ref(`/users/${currentUser.uid}`)
     .set({ name: fullName });
-/*  firebase.database().ref(`/users/${currentUser.uid}/events/-LFWRl04vMJVEAJhlVcA`)
-    .set({ uid: 'ddd' });
-  firebase.database().ref(`/users/${currentUser.uid}/events/-LFWWAU_oc7oQaa_mmCS`)
-    .set({ uid: 'aa' }); */
   };
 const createUserSuccess = (dispatch, user, navigation) => {
   dispatch({
