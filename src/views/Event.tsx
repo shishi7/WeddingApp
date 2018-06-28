@@ -66,6 +66,18 @@ class Event extends Component {
     this.setState({ dialogVisible: false})
   }
 
+  getInviteCode() {
+      var inviteCode;
+      firebase.database().ref(`events/${this.props.event}`)
+      .once('value', snapshot => {
+        var info = snapshot.val();
+        inviteCode = info.inviteCode;
+        this.setState({ inviteCode: inviteCode });
+        console.log(inviteCode);
+      })
+
+  }
+
   constructor(props) {
    super(props);
    this.state = {}
@@ -73,6 +85,7 @@ class Event extends Component {
 
   componentWillMount(){
     this.props.fetchImages(this.props.event);
+    this.getInviteCode();
   }
 
   renderImage(image) {
@@ -112,14 +125,10 @@ class Event extends Component {
       <View>
         <Dialog.Container
           visible={this.state.dialogVisible}>
-          <Dialog.Title>Invite code</Dialog.Title>
-          <Dialog.Description>
-            The invite code:
-          </Dialog.Description>
-          <Dialog.Input
-            label = {this.props.event}
-            editable= {false}
-          />
+          <Dialog.Title
+              selectable = {true}>
+              {this.state.inviteCode}
+          </Dialog.Title>
           <Dialog.Button label="Cancel" onPress={this.handleCancel.bind(this)} />
         </Dialog.Container>
 

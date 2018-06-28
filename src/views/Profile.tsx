@@ -16,7 +16,7 @@ class Profile extends Component {
     return (
       <View>
         <View>
-          <Text> { firebase.auth().currentUser !== null ? firebase.auth().currentUser.email : '' } </Text>
+          <Text > { firebase.auth().currentUser !== null ? firebase.auth().currentUser.email : '' } </Text>
         </View>
 
         <View>
