@@ -169,5 +169,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  SignOut
+  SignOut, toForgotPassword
 })(Profile);
