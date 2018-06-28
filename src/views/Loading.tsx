@@ -5,12 +5,12 @@ import { Spinner } from '../components';
 import { PEACH } from '../consts/colors';
 
 const config = {
-  apiKey: 'AIzaSyDS5rCta4AfPr0cy73O9u7t5Q2zmGNRLx0',
-  authDomain: 'weddingapp-1337.firebaseapp.com',
-  databaseURL: 'https://weddingapp-1337.firebaseio.com',
-  projectId: 'weddingapp-1337',
-  storageBucket: 'weddingapp-1337.appspot.com',
-  messagingSenderId: '587460572824'
+  apiKey: "AIzaSyCmI91MLgc1lAPV7eZRec8i3hJUOE1iiEU",
+  authDomain: "weddingapp-11218121926.firebaseapp.com",
+  databaseURL: "https://weddingapp-11218121926.firebaseio.com",
+  projectId: "weddingapp-11218121926",
+  storageBucket: "weddingapp-11218121926.appspot.com",
+  messagingSenderId: "903720917602"
 };
 firebase.initializeApp(config);
 
