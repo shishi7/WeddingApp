@@ -97,6 +97,12 @@ class Event extends Component {
   render() {
     return (
       <View>
+        <View
+          style={{ flexDirection: 'row' }}
+        >
+        <View
+          style={{ flex: 3 }}
+        >
         <Button
             onPress={ () => this._pickImage() }
             icon={{
@@ -112,6 +118,27 @@ class Event extends Component {
               borderRadius: 8
             }}
           />
+        </View>
+      <View
+        style={{ flex: 1 }}
+      >
+          <Button
+              onPress={ () => this._pickImage() }
+              icon={{
+                name: 'vpn-key',
+                size: 30,
+                color: 'black'
+              }}
+              containerViewStyle={{width: '100%', marginLeft: 0}}
+              buttonStyle={{
+                backgroundColor: "#fff",
+                borderColor: "#000",
+                borderWidth: 2,
+                borderRadius: 8
+              }}
+            />
+          </View>
+        </View>
             <FlatList
               data={this.props.images}
               numColumns={3}
