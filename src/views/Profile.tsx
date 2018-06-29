@@ -44,11 +44,16 @@ class Profile extends Component {
         <Card>
 
           <CardItem>
-            <Text style={{fontSize: 18}}>Your email: { firebase.auth().currentUser.email !== null ? firebase.auth().currentUser.email : '' } </Text>
+            <Text
+              selectable = { true }
+              style={{fontSize: 18}}
+              >
+                Your email: { firebase.auth().currentUser.email !== null ? firebase.auth().currentUser.email : '' }
+            </Text>
           </CardItem>
 
           <CardItem>
-            <Text style={{fontSize: 18}}>Your Name: { firebase.auth().currentUser.displayName !== null ? firebase.auth().currentUser.displayName : '' } </Text>
+            <Text selectable={true} style={{fontSize: 18}}>Your Name: { firebase.auth().currentUser.displayName !== null ? firebase.auth().currentUser.displayName : '' } </Text>
           </CardItem>
 
         </Card>
